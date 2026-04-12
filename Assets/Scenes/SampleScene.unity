@@ -1017,7 +1017,7 @@ MonoBehaviour:
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 0
-  HP: 100
+  HP: 99
   Speed: 5
   SprintMod: 10
   JumpSpeed: 5
