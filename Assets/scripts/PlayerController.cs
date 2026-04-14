@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup, Iheal, IOpen, I
 
         pushVel = Vector3.Lerp(pushVel, Vector3.zero, pushVelTime * Time.deltaTime);
 
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist);
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
         if (controller.isGrounded)
         {
             jumpCount = 0;
@@ -83,7 +83,11 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup, Iheal, IOpen, I
 
         playerVel.y -= gravity * Time.deltaTime;
 
-        if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[gunListPos].ammoCur > 0 && shootTimer >= shootRate)
+        //if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[gunListPos].ammoCur > 0 && shootTimer >= shootRate)
+        //{
+        //    shoot();
+        //}
+        if (Input.GetButton("Fire1") && shootTimer >= shootRate)
         {
             shoot();
         }
@@ -114,15 +118,15 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup, Iheal, IOpen, I
     {
         shootTimer = 0;
 
-        gunList[gunListPos].ammoCur--;
-        aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootSoundVol);
+        //gunList[gunListPos].ammoCur--;
+        //aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootSoundVol);
 
         RaycastHit hit;
         if(Physics.Raycast(Camera.main.transform.position,Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
         {
             Debug.Log(hit.collider.name);
 
-            Instantiate(gunList[gunListPos].hitEffect, hit.point, Quaternion.identity);
+            //Instantiate(gunList[gunListPos].hitEffect, hit.point, Quaternion.identity);
 
             IDamage dmg = hit.collider.GetComponent<IDamage>();
             if(dmg != null)
