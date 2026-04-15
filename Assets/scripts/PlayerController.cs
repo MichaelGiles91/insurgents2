@@ -4,6 +4,7 @@ using UnityEngine.Rendering;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 
 public class PlayerController : MonoBehaviour, IDamage, IPickup, Iheal, IOpen, IPush
@@ -23,6 +24,13 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup, Iheal, IOpen, I
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
+    [SerializeField] gunStats startingGun;
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] Transform shootPoint;
+    [SerializeField] float bulletForce = 20f;
+
+    [SerializeField] float recoilAmount = 0.1f;
+    [SerializeField] float recoilSpeed = 10f;
 
     [SerializeField] GameObject gunModel;
 
@@ -36,23 +44,44 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup, Iheal, IOpen, I
     Vector3 moveDir;
     Vector3 playerVel;
     Vector3 pushVel;
-    
+    Vector3 gunStartPos;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         HPOrig = HP;
         spawnPlayer();
 
-
+        if (startingGun != null)
+        {
+            getGunStats(startingGun);
+        }
+        gunStartPos = gunModel.transform.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
+        shootTimer += Time.deltaTime;
         movement();
         sprint();
         updatePlayerUI();
-        
+
+        gunModel.transform.localPosition = Vector3.Lerp(
+    gunModel.transform.localPosition,
+    gunStartPos,
+    Time.deltaTime * recoilSpeed);
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            shoot();
+        }
+
+        gunModel.transform.localPosition = Vector3.Lerp(
+     gunModel.transform.localPosition,
+     gunStartPos,
+     recoilSpeed * Time.deltaTime
+ );
     }
 
     public void spawnPlayer()
@@ -112,24 +141,20 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup, Iheal, IOpen, I
     }
     void shoot()
     {
+     
         shootTimer = 0;
 
+        gunModel.transform.localPosition -= new Vector3(0, 0, recoilAmount);
         gunList[gunListPos].ammoCur--;
         aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootSoundVol);
 
-        RaycastHit hit;
-        if(Physics.Raycast(Camera.main.transform.position,Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
-        {
-            Debug.Log(hit.collider.name);
+        GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
 
-            Instantiate(gunList[gunListPos].hitEffect, hit.point, Quaternion.identity);
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        rb.linearVelocity = shootPoint.forward * bulletForce;
 
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
-            if(dmg != null)
-            {
-                dmg.takeDamage(shootDamage);
-            }
-        }
+
+        Debug.Log("SHOOTING");
     }
 
     void reload()
@@ -173,6 +198,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup, Iheal, IOpen, I
     public void updatePlayerUI()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+
+        gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
     }
     public void getGunStats(gunStats gun)
     {
@@ -183,8 +210,11 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup, Iheal, IOpen, I
         shootDist = gun.shootDist;
         shootRate = gun.shootRate;
 
-        gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+        gunModel.GetComponentInChildren<MeshFilter>().sharedMesh =
+    gun.gunModel.GetComponentInChildren<MeshFilter>().sharedMesh;
+
+        gunModel.GetComponentInChildren<MeshRenderer>().sharedMaterial =
+            gun.gunModel.GetComponentInChildren<MeshRenderer>().sharedMaterial;
 
         changeGun();
     }
@@ -195,8 +225,11 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup, Iheal, IOpen, I
         shootDist = gunList[gunListPos].shootDist;
         shootRate = gunList[gunListPos].shootRate;
 
-        gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].gunModel.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[gunListPos].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+        gunModel.GetComponentInChildren<MeshFilter>().sharedMesh =
+     gunList[gunListPos].gunModel.GetComponentInChildren<MeshFilter>().sharedMesh;
+
+        gunModel.GetComponentInChildren<MeshRenderer>().sharedMaterial =
+            gunList[gunListPos].gunModel.GetComponentInChildren<MeshRenderer>().sharedMaterial;
     }
 
     void selectGun()
@@ -217,4 +250,5 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup, Iheal, IOpen, I
     {
         pushVel += pushAmount;
     }
+
 }
