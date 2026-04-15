@@ -7,6 +7,8 @@ public class Door : MonoBehaviour
     [SerializeField] GameObject button;
 
     bool canOpen;
+    bool isOpen;
+
 
 
   
@@ -23,6 +25,7 @@ public class Door : MonoBehaviour
         if (other.GetComponent<IOpen>() != null)
         {
             canOpen = true;
+            button.SetActive(true);
         }
     }
 
