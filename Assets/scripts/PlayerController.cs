@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
 
-public class PlayerController : MonoBehaviour, IDamage, IPickup, Iheal, IOpen, IPush
+public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup, Iheal, IOpen, I
         movement();
         sprint();
         updatePlayerUI();
+        interact();
 
         gunModel.transform.localPosition = Vector3.Lerp(
     gunModel.transform.localPosition,
@@ -141,17 +142,20 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup, Iheal, IOpen, I
     }
     void shoot()
     {
-     
+        if (gunList.Count == 0) return;
+        if (gunListPos >= gunList.Count) return;
+
         shootTimer = 0;
 
         gunModel.transform.localPosition -= new Vector3(0, 0, recoilAmount);
-        gunList[gunListPos].ammoCur--;
+        if (gunListPos >= gunList.Count)
+            gunListPos = 0;
         aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootSoundVol);
 
         GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
 
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        rb.linearVelocity = shootPoint.forward * bulletForce;
+        rb.linearVelocity = Camera.main.transform.forward * bulletForce;
 
 
         Debug.Log("SHOOTING");
@@ -210,13 +214,23 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup, Iheal, IOpen, I
         shootDist = gun.shootDist;
         shootRate = gun.shootRate;
 
-        gunModel.GetComponentInChildren<MeshFilter>().sharedMesh =
-    gun.gunModel.GetComponentInChildren<MeshFilter>().sharedMesh;
+        MeshFilter myMesh = gunModel.GetComponentInChildren<MeshFilter>();
+        MeshRenderer myRenderer = gunModel.GetComponentInChildren<MeshRenderer>();
 
-        gunModel.GetComponentInChildren<MeshRenderer>().sharedMaterial =
-            gun.gunModel.GetComponentInChildren<MeshRenderer>().sharedMaterial;
+        MeshFilter newMesh = gun.gunModel.GetComponentInChildren<MeshFilter>();
+        MeshRenderer newRenderer = gun.gunModel.GetComponentInChildren<MeshRenderer>();
 
-        changeGun();
+        if (myMesh != null && newMesh != null)
+        {
+            myMesh.sharedMesh = newMesh.sharedMesh;
+        }
+
+        if (myRenderer != null && newRenderer != null)
+        {
+            myRenderer.sharedMaterial = newRenderer.sharedMaterial;
+        }
+
+        gunModel.SetActive(true);
     }
 
     void changeGun()
@@ -249,6 +263,24 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup, Iheal, IOpen, I
     public void getPushVel(Vector3 pushAmount)
     {
         pushVel += pushAmount;
+    }
+
+    void interact()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            RaycastHit hit;
+
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 3f))
+            {
+                IPickup pickup = hit.collider.GetComponent<IPickup>();
+
+                if (pickup != null)
+                {
+                    pickup.pickup(this);
+                }
+            }
+        }
     }
 
 }
