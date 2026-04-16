@@ -3,6 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class ButtonFunctions : MonoBehaviour
 {
+    public void StartGame()
+    {
+        SceneManager.LoadScene("CentralHubScene");
+    }
     public void resume()
     {
         gameManager.instance.stateUnpause();
