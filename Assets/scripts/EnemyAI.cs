@@ -33,7 +33,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         attackTimer += Time.deltaTime;
         playerDirection = (gameManager.instance.player.transform.position - transform.position);
 
-        agent.SetDestination(gameManager.instance.player.transform.position);//this line of code causes zombie to see player globally
+        agent.SetDestination(gameManager.instance.player.transform.position);
 
         float distance = Vector3.Distance(transform.position, player.position);
 
@@ -43,14 +43,16 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
         if (distance <= attackRange && attackTimer >= attackRate)
         {
-            
             attack();
+
         }
     }
     void faceTarget()
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDirection.x, 0, playerDirection.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+
+
     }
 
     void attack()
