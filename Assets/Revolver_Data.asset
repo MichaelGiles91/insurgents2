@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 822e714f30cff1e47bdb7c8b6131ca5c, type: 3}
-  m_Name: Pistol_Data
+  m_Name: Revolver_Data
   m_EditorClassIdentifier: Assembly-CSharp::gunStats
-  gunModel: {fileID: 88317814946030486, guid: ea1ad08618ee1794b816f11a5aebd849, type: 3}
-  shootDamage: 3
-  shootDist: 100
-  shootRate: 0.3
-  ammoCur: 30
-  ammoMax: 30
+  gunModel: {fileID: 6971496768782505918, guid: dfc4d87131163204eb41e8626f81e196, type: 3}
+  shootDamage: 10
+  shootDist: 15
+  shootRate: 0.1
+  ammoCur: 9
+  ammoMax: 9
   hitEffect: {fileID: 0}
   shootSound: []
   shootSoundVol: 0

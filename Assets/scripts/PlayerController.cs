@@ -1,10 +1,11 @@
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine.Rendering;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using TMPro;
 
 
 public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform shootPoint;
     [SerializeField] float bulletForce = 20f;
+    [SerializeField] TMP_Text ammoText;
 
     [SerializeField] float recoilAmount = 0.1f;
     [SerializeField] float recoilSpeed = 10f;
@@ -35,6 +37,9 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     [SerializeField] GameObject gunModel;
 
     [SerializeField] AudioSource aud;
+    [SerializeField] float reloadTime = 1.5f;
+
+    bool isReloading = false;
 
     int jumpCount;
     int HPOrig;
@@ -113,7 +118,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
 
         playerVel.y -= gravity * Time.deltaTime;
 
-        if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[gunListPos].ammoCur > 0 && shootTimer >= shootRate)
+        if (Input.GetButtonDown("Fire1") && gunList.Count > 0 && gunList[gunListPos].ammoCur > 0 && shootTimer >= shootRate)
         {
             shoot();
         }
@@ -142,6 +147,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     }
     void shoot()
     {
+        if (isReloading) return;
         if (gunList.Count == 0) return;
         if (gunListPos >= gunList.Count) return;
 
@@ -157,15 +163,17 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.linearVelocity = Camera.main.transform.forward * bulletForce;
 
+        gunList[gunListPos].ammoCur--;
+        updateAmmoUI();
 
         Debug.Log("SHOOTING");
     }
 
     void reload()
     {
-        if (Input.GetButtonDown("Reload") && gunList.Count > 0)
+        if (Input.GetButtonDown("Reload") && gunList.Count > 0 && !isReloading)
         {
-            gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
+            StartCoroutine(reloadRoutine());
         }
     }
     public void takeDamage(int amount)
@@ -214,36 +222,37 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         shootDist = gun.shootDist;
         shootRate = gun.shootRate;
 
-        MeshFilter myMesh = gunModel.GetComponentInChildren<MeshFilter>();
-        MeshRenderer myRenderer = gunModel.GetComponentInChildren<MeshRenderer>();
-
-        MeshFilter newMesh = gun.gunModel.GetComponentInChildren<MeshFilter>();
-        MeshRenderer newRenderer = gun.gunModel.GetComponentInChildren<MeshRenderer>();
-
-        if (myMesh != null && newMesh != null)
-        {
-            myMesh.sharedMesh = newMesh.sharedMesh;
-        }
-
-        if (myRenderer != null && newRenderer != null)
-        {
-            myRenderer.sharedMaterial = newRenderer.sharedMaterial;
-        }
+        
 
         gunModel.SetActive(true);
+
+        changeGun();
+        updateAmmoUI();
     }
 
     void changeGun()
     {
+        foreach (Transform child in gunModel.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        GameObject newGun = Instantiate(gunList[gunListPos].gunModel, gunModel.transform);
+
+        newGun.transform.localPosition = Vector3.zero;
+        newGun.transform.localRotation = Quaternion.identity;
+
+        shootPoint = newGun.transform.Find("Shoot Point");
+
+        if (shootPoint == null)
+        {
+            Debug.LogError("NO SHOOT POINT FOUND ON NEW GUN");
+        }
+
         shootDamage = gunList[gunListPos].shootDamage;
         shootDist = gunList[gunListPos].shootDist;
         shootRate = gunList[gunListPos].shootRate;
-
-        gunModel.GetComponentInChildren<MeshFilter>().sharedMesh =
-     gunList[gunListPos].gunModel.GetComponentInChildren<MeshFilter>().sharedMesh;
-
-        gunModel.GetComponentInChildren<MeshRenderer>().sharedMaterial =
-            gunList[gunListPos].gunModel.GetComponentInChildren<MeshRenderer>().sharedMaterial;
+        updateAmmoUI();
     }
 
     void selectGun()
@@ -281,6 +290,45 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
                 }
             }
         }
+    }
+    void updateAmmoUI()
+    {
+        if (gunList.Count == 0) return;
+
+        ammoText.text = $"{gunList[gunListPos].ammoCur} / {gunList[gunListPos].ammoMax}";
+    }
+
+    IEnumerator reloadRoutine()
+    {
+        isReloading = true;
+
+        Quaternion startRot = gunModel.transform.localRotation;
+        Quaternion reloadRot = Quaternion.Euler(60f, 0f, 0f); // tilt down
+
+        float t = 0;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime * 5f;
+            gunModel.transform.localRotation = Quaternion.Lerp(startRot, reloadRot, t);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(reloadTime * 0.5f);
+
+        gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
+        updateAmmoUI();
+
+        t = 0;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime * 5f;
+            gunModel.transform.localRotation = Quaternion.Lerp(reloadRot, startRot, t);
+            yield return null;
+        }
+
+        isReloading = false;
     }
 
 }
