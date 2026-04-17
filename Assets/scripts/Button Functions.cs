@@ -1,8 +1,11 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ButtonFunctions : MonoBehaviour
 {
+    public GameObject settingsPanel;
+    public GameObject PauseMenu;
     public void StartGame()
     {
         SceneManager.LoadScene("CentralHubScene");
@@ -26,5 +29,17 @@ public class ButtonFunctions : MonoBehaviour
     {
         gameManager.instance.playerScript.spawnPlayer();
         gameManager.instance.stateUnpause();    
+    }
+    public void OpenSettings()
+    {
+        Debug.Log("OpenSettings fired");
+        PauseMenu.SetActive(false);
+        settingsPanel.SetActive(true);
+    }
+    public void CloseSettings()
+    {
+        
+        settingsPanel.SetActive(false);
+        PauseMenu.SetActive(true);
     }
 }
