@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour, IDamage
 {
-    [SerializeField] NavMeshAgent agent;    
+    [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
@@ -25,8 +25,6 @@ public class EnemyAI : MonoBehaviour, IDamage
         colorOrig = model.material.color;
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
-      
-
     }
 
     // Update is called once per frame
@@ -35,7 +33,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         attackTimer += Time.deltaTime;
         playerDirection = (gameManager.instance.player.transform.position - transform.position);
 
-        agent.SetDestination(gameManager.instance.player.transform.position);
+        agent.SetDestination(gameManager.instance.player.transform.position);//this line of code causes zombie to see player globally
 
         float distance = Vector3.Distance(transform.position, player.position);
 
@@ -45,16 +43,14 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
         if (distance <= attackRange && attackTimer >= attackRate)
         {
+            
             attack();
-
         }
     }
     void faceTarget()
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDirection.x, 0, playerDirection.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
-
-
     }
 
     void attack()
@@ -88,7 +84,7 @@ public class EnemyAI : MonoBehaviour, IDamage
 
         if (HP <= 0)
         {
-            
+
             Destroy(gameObject);
         }
         else
