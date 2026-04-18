@@ -37,6 +37,7 @@ public class EnemyAI : MonoBehaviour, IDamage
 
         float distance = Vector3.Distance(transform.position, player.position);
 
+
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
             faceTarget();
