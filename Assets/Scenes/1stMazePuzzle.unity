@@ -1705,6 +1705,8 @@ MonoBehaviour:
   R1ET: 130
   R2ET: 208
   R3ET: 269
+  EDST: 291
+  EDET: 352
 --- !u!4 &1064979105
 Transform:
   m_ObjectHideFlags: 0

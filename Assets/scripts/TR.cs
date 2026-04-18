@@ -12,6 +12,8 @@ public class TR : MonoBehaviour
     [SerializeField] float R1ET;
     [SerializeField] float R2ET;
     [SerializeField] float R3ET;
+    [SerializeField] float EDST;
+    [SerializeField] float EDET;
 
     bool isRiddlePlaying;
     bool isPlayer;
@@ -70,8 +72,19 @@ public class TR : MonoBehaviour
             {
                 VO.Stop();
             }
+
+            if (Timer >= EDST)
+            {
+                VO.Play();
+            }
+
+            if (Timer >= EDET)
+            {
+                VO.Stop();
+            }
         }
     }
+
  
 
     private void OnTriggerEnter(Collider other)
