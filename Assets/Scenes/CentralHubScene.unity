@@ -2416,6 +2416,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2743304cdd247d49b04cc2e27da7b92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonFunctions
+  settingsPanel: {fileID: 0}
+  PauseMenu: {fileID: 0}
 --- !u!1 &601731826
 GameObject:
   m_ObjectHideFlags: 0
@@ -3768,22 +3770,8 @@ MonoBehaviour:
   shootDamage: 0
   shootDist: 0
   shootRate: 0
-  startingGun: {fileID: 11400000, guid: bb9e1507c4f79c941afc51697b7b6d9b, type: 2}
-  bulletPrefab: {fileID: 6152012165266093810, guid: ec0581e8aa214204b9f01884e77f846c, type: 3}
-  shootPoint: {fileID: 2066785997}
-  bulletForce: 20
-  ammoText: {fileID: 64014918}
-  recoilAmount: 0.1
-  recoilSpeed: 10
   gunModel: {fileID: 1004238962}
   aud: {fileID: 998465300}
-  reloadTime: 2.5
-  reloadSound: {fileID: 8300000, guid: 16f5e02fb7949fe49aa236f9c63adb67, type: 3}
-  isPowerWeapon: 0
-  powerDuration: 10
-  powerMusic: {fileID: 0}
-  swingCooldown: 0.5
-  gun_Model: {fileID: 1004238965}
 --- !u!82 &998465300 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 527548449868183750, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
@@ -3792,11 +3780,6 @@ AudioSource:
 --- !u!1 &1004238962 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2367679000309641823, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
-  m_PrefabInstance: {fileID: 1244041588}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1004238965 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 939904025355196820, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
   m_PrefabInstance: {fileID: 1244041588}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1051688683
@@ -6032,6 +6015,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: resume
       objectReference: {fileID: 0}
+    - target: {fileID: 8099090312519793263, guid: d1340db50eb3a584a9e4269c1ef95f77, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3167579570483583764, guid: d1340db50eb3a584a9e4269c1ef95f77, type: 3}
     - {fileID: 1696347721516823263, guid: d1340db50eb3a584a9e4269c1ef95f77, type: 3}
@@ -7943,11 +7930,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2056615572}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &2066785997 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6118424656575093948, guid: 7b4c75ae57119d84f84be1e64e4cc673, type: 3}
-  m_PrefabInstance: {fileID: 1080297377}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2129376653
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class PlayerController : MonoBehaviour, IDamage, IPickup, Iheal, IOpen, IPush
+public class PlayerController : MonoBehaviour, IDamage,Iheal, IOpen, IPush
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
