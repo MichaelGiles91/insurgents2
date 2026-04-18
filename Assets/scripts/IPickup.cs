@@ -2,5 +2,7 @@ using UnityEngine;
 
 public interface IPickup
 {
-    void pickup(PlayerController player);
+    public void getGunStats(gunStats gun);
+   
+
 }
