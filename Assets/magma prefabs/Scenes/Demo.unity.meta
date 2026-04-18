@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: dc2dbaccffb730447ade8b1790da61de
+guid: 4d04ab90505cd9542839f37bbba21d40
 DefaultImporter:
   externalObjects: {}
   userData: 
@@ -7,8 +7,8 @@ DefaultImporter:
   assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
-  productId: 292492
-  packageName: Free Lava Shader
+  productId: 304296
+  packageName: Low Poly Pistol Weapon Pack 2
   packageVersion: 1.0
-  assetPath: Assets/Shaders/Scenes/Demo.unity
-  uploadId: 684944
+  assetPath: Assets/magma prefabs/Scenes/Demo.unity
+  uploadId: 714056
