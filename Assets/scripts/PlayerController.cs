@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
 
     [SerializeField] AudioSource aud;
     [SerializeField] float reloadTime = 1.5f;
+    [SerializeField] AudioClip reloadSound;
+
 
     bool isReloading = false;
     public bool isPowerWeapon;
@@ -69,6 +71,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     {
         HPOrig = HP;
         spawnPlayer();
+        aud = GetComponent<AudioSource>();
 
         if (startingGun != null)
         {
@@ -161,7 +164,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     }
     void shoot()
     {
-        if (isReloading) return;
+        //if (isReloading) return;
         if (gunList.Count == 0) return;
         if (gunListPos >= gunList.Count) return;
 
@@ -216,9 +219,10 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
 
     void reload()
     {
-        if (Input.GetButtonDown("Reload") && gunList.Count > 0 && !isReloading)
+        if (isReloading) return;
+        if (Input.GetButtonDown("Reload") && !isReloading && gunList.Count > 0)
         {
-            StartCoroutine(reloadRoutine());
+            StartCoroutine(ReloadRoutine());
         }
     }
 
@@ -423,35 +427,49 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         ammoText.text = $"{gunList[gunListPos].ammoCur} / {gunList[gunListPos].ammoMax}";
     }
 
-    IEnumerator reloadRoutine()
+    // 🔥 FULL RELOAD ANIMATION (SLOW + SMOOTH)
+
+    IEnumerator ReloadRoutine()
     {
         isReloading = true;
 
-        Quaternion startRot = gunModel.transform.localRotation;
-        Quaternion reloadRot = Quaternion.Euler(60f, 0f, 0f); // tilt down
+        Vector3 startPos = gun_Model.localPosition;
+        Vector3 downPos = startPos + new Vector3(0, -1.5f, 0); // deeper drop
 
         float t = 0;
 
+        // 🔻 MOVE DOWN (faster)
         while (t < 1)
         {
-            t += Time.deltaTime * 5f;
-            gunModel.transform.localRotation = Quaternion.Lerp(startRot, reloadRot, t);
+            t += Time.deltaTime * 3f;
+            gun_Model.localPosition = Vector3.Lerp(startPos, downPos, t);
             yield return null;
         }
 
-        yield return new WaitForSeconds(reloadTime * 0.5f);
+        // 🔊 PLAY SOUND
+        if (reloadSound != null)
+        {
+            aud.PlayOneShot(reloadSound);
+        }
 
+        // ⏱ WAIT (main reload time)
+        yield return new WaitForSeconds(reloadTime * 0.8f);
+
+        // 🔄 REFILL AMMO
         gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
         updateAmmoUI();
 
         t = 0;
 
+        // 🔺 MOVE BACK UP (slower for weight)
         while (t < 1)
         {
-            t += Time.deltaTime * 5f;
-            gunModel.transform.localRotation = Quaternion.Lerp(reloadRot, startRot, t);
+            t += Time.deltaTime * 1.5f;
+            gun_Model.localPosition = Vector3.Lerp(downPos, startPos, t);
             yield return null;
         }
+
+        gun_Model.localPosition = startPos;
 
         isReloading = false;
     }

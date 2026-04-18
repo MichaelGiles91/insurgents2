@@ -6,6 +6,7 @@ public class GunPickup : MonoBehaviour, IPickup
 
     public void pickup(PlayerController player)
     {
+        ObjectiveManager.instance.CompleteObjective();
         player.getGunStats(gun);
         Destroy(gameObject);
     }
