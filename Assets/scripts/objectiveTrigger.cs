@@ -1,15 +1,13 @@
 using UnityEngine;
 
-public class objectiveTrigger : MonoBehaviour
+public class ObjectiveTrigger : MonoBehaviour
 {
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Triggered by: " + other.name);
-            objectiveSystem.instance.nextObjective();
-            Destroy(gameObject);
+            ObjectiveManager.instance.CompleteObjective();
+            Destroy(gameObject); 
         }
     }
 }
