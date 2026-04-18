@@ -3,14 +3,20 @@ using UnityEngine.AI;
 
 public class BossAI : MonoBehaviour
 {
-    
-    public float bossSpeed;
+    [SerializeField] NavMeshAgent agent;
+    [SerializeField] GameObject fireBall;
+    [SerializeField] Transform shootPos;
+   
+    [SerializeField]int bossHP;
+    [SerializeField]int bossSpeed;
+    [SerializeField] float shootRate;
+
+
     public Transform target;
     public float minumumDistance;
 
-    //public GameObject projectile;
-    public float timeBetweenShots;
-    private float nextShotTime;
+    float shootTimer;
+   
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,19 +27,33 @@ public class BossAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.time > nextShotTime)
-        {
-           // Instantiate(projectile, transform.position, Quaternion.identity);
-            nextShotTime = Time.time + timeBetweenShots;
-        }
 
-        if (Vector3.Distance(transform.position, target.position) > minumumDistance)
+        ////shootTimer += Time.deltaTime;
+
+        ////if (Vector3.Distance(transform.position, target.position) > minumumDistance)
+        ////{
+        ////    transform.position = Vector3.MoveTowards(transform.position, target.position, bossSpeed * Time.deltaTime);
+        ////    shoot();
+        ////}
+        ////else
+        ////{
+
+        ////}
+        ///
+        shootTimer += Time.deltaTime;
+        agent.SetDestination(gameManager.instance.player.transform.position);
         {
-            transform.position = Vector3.MoveTowards(transform.position, target.position, bossSpeed * Time.deltaTime);
+            if (shootTimer >= shootRate)
+            {
+                shoot();
+            }
         }
-        {
-            //attack player
-        }
+    }
+
+    void shoot()
+    {
+        shootTimer = 0;
+        Instantiate(fireBall, shootPos.position, transform.rotation);
     }
 
  

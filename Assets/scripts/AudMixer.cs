@@ -16,7 +16,7 @@ public class AudMixer : MonoBehaviour
         SetMusicVolume(music);
         SetSFXVolume(SFX);
 
-        musicSlider.value = music;
+      //  musicSlider.value = music;
         SFXSlider.value = SFX;
     }
 
