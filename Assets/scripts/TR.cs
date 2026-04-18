@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class tapeRecorder : MonoBehaviour
+public class TR : MonoBehaviour
 {
     [SerializeField] GameObject recorder;
     [SerializeField] AudioSource Tape;
