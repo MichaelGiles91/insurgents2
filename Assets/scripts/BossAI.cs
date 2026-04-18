@@ -10,7 +10,11 @@ public class BossAI : MonoBehaviour
     [SerializeField]int bossHP;
     [SerializeField]int bossSpeed;
     [SerializeField] float shootRate;
+    [SerializeField] float jumpRate;
+    [SerializeField] float jumpForce;
 
+    float jumpTimer;
+   
 
     public Transform target;
     public float minumumDistance;
@@ -41,13 +45,19 @@ public class BossAI : MonoBehaviour
         ////}
         ///
         shootTimer += Time.deltaTime;
+        jumpTimer += Time.deltaTime;
+
         agent.SetDestination(gameManager.instance.player.transform.position);
-        {
+        
             if (shootTimer >= shootRate)
             {
                 shoot();
             }
+            if(jumpTimer >= jumpRate)
+        {
+            bossJump();
         }
+        
     }
 
     void shoot()
@@ -56,6 +66,10 @@ public class BossAI : MonoBehaviour
         Instantiate(fireBall, shootPos.position, transform.rotation);
     }
 
- 
+ void bossJump()
+    {
+        jumpTimer = 0;
+
+    }
 }
 
