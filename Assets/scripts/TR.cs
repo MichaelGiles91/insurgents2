@@ -6,8 +6,16 @@ public class TR : MonoBehaviour
     [SerializeField] GameObject recorder;
     [SerializeField] AudioSource Tape;
     [SerializeField] AudioSource VO;
+    [SerializeField] float R1ST;
+    [SerializeField] float R2ST;
+    [SerializeField] float R3ST;
+    [SerializeField] float R1ET;
+    [SerializeField] float R2ET;
+    [SerializeField] float R3ET;
 
+    bool isRiddlePlaying;
     bool isPlayer;
+    float Timer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,15 +29,50 @@ public class TR : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      if(isPlayer && Input.GetKeyDown(KeyCode.E))
+        if (isPlayer && Input.GetKeyDown(KeyCode.E))
         {
-          if(!Tape.isPlaying && !VO.isPlaying)
-          {
-            Tape.Play();
-            VO.Play();
-          }
+            if (!Tape.isPlaying && !VO.isPlaying)
+            {
+                Tape.Play();
+                VO.Play();
+            }
+        }
+
+        if (isRiddlePlaying)
+        {
+            Timer += Time.deltaTime;
+            if (Timer >= R1ST)
+            {
+                VO.Play();
+            }
+
+            if (Timer >= R1ET)
+            {
+                VO.Stop();
+            }
+
+            if (Timer >= R2ST)
+            {
+                VO.Play();
+            }
+
+            if (Timer >= R2ET)
+            {
+                VO.Stop();
+            }
+
+            if (Timer >= R3ST)
+            {
+                VO.Play();
+            }
+
+            if (Timer >= R3ET)
+            {
+                VO.Stop();
+            }
         }
     }
+ 
 
     private void OnTriggerEnter(Collider other)
     {

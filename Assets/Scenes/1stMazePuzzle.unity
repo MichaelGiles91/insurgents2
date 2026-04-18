@@ -1699,6 +1699,12 @@ MonoBehaviour:
   recorder: {fileID: 438993681}
   Tape: {fileID: 1064979102}
   VO: {fileID: 1064979102}
+  R1ST: 0
+  R2ST: 165
+  R3ST: 250
+  R1ET: 130
+  R2ET: 208
+  R3ET: 269
 --- !u!4 &1064979105
 Transform:
   m_ObjectHideFlags: 0
