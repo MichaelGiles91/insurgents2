@@ -53,6 +53,7 @@ public class TR : MonoBehaviour
       if(Tape == null)
         {
           Tape = GetComponent<AudioSource>();
+          SetupRiddle1();
         }
     }
 
@@ -61,7 +62,6 @@ public class TR : MonoBehaviour
     {
     if (isRiddlePlaying)
       {
-        Timer += Time.deltaTime;
         HandleRiddleAudio();
       }
         
@@ -83,10 +83,15 @@ public class TR : MonoBehaviour
 
         if (isPlayer && Input.GetKeyDown(KeyCode.E))
         {
-            if (!Tape.isPlaying)
-            {
-                Tape.Play();
-            }
+          if (!riddleActive)
+          {
+            StartRiddle();
+          }
+            
+          else
+          {
+            Interact();
+          }
         }
 
         if (isRiddlePlaying)
@@ -129,6 +134,8 @@ public class TR : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+      Debug.Log("Trigger Entered: " + other.name);
+
       if (other.CompareTag("Player"))
       {
         isPlayer = true;
@@ -136,16 +143,20 @@ public class TR : MonoBehaviour
       }
 
       if (other.gameObject == Sofa ||
-         other.gameObject == Air ||
-         other.gameObject == Candle ||
-         other.gameObject == Clock)
+        other.gameObject == Air ||
+        other.gameObject == Candle ||
+       other.gameObject == Clock)
+
       {
         CurrI = other.gameObject;
+        Debug.Log("CurrI SET TO: " + CurrI.name);
       }
     }
-    
+
     private void OnTriggerExit(Collider other)
     {
+      Debug.Log("Trigger Exit: " + other.name);
+
       if (other.CompareTag("Player"))
       {
         isPlayer = false;
@@ -154,6 +165,7 @@ public class TR : MonoBehaviour
 
       if (other.gameObject == CurrI)
       {
+        Debug.Log("CurrI CLEARED");
         CurrI = null;
       }
     }
@@ -217,5 +229,46 @@ public class TR : MonoBehaviour
     public void SelectCandle()
     {
       RiddleAnswer(RA3);
+    }
+
+    void Interact()
+    {
+      if (CurrI == null)
+      {
+        Debug.LogWarning("Interact pressed BUT CurrI is NULL");
+        return;
+      }
+
+      Debug.Log("Interacting with: " + CurrI.name);
+
+      if (CurrI == Clock)
+      RiddleAnswer(RA1);
+
+      else if (CurrI == Air)
+      RiddleAnswer(RA2);
+
+      else if (CurrI == Candle)
+      RiddleAnswer(RA3);
+    }
+
+    void SetupRiddle1()
+    {
+      RA1 = true;
+      RA2 = false;
+      RA3 = false;
+    }
+
+    void SetupRiddle2()
+    {
+      RA1 = false;
+      RA2 = true;
+      RA3 = false;
+    }
+
+    void SEtupRiddle3()
+    {
+      RA1 = false;
+      RA2 = false;
+      RA3 = true;
     }
 }

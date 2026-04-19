@@ -1702,6 +1702,9 @@ MonoBehaviour:
   Sofa: {fileID: 512918591}
   Air: {fileID: 939481019}
   Candle: {fileID: 679898258}
+  CurrI: {fileID: 1064979099}
+  CR: 0
+  RTL: 30
   R1ST: 0
   R2ST: 165
   R3ST: 250
