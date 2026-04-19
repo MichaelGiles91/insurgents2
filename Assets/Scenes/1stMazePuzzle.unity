@@ -622,7 +622,7 @@ GameObject:
   - component: {fileID: 512918592}
   m_Layer: 0
   m_Name: sofa
-  m_TagString: Untagged
+  m_TagString: Sofa
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -739,7 +739,7 @@ GameObject:
   - component: {fileID: 679898259}
   m_Layer: 0
   m_Name: Candle
-  m_TagString: Untagged
+  m_TagString: Candle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1355,8 +1355,8 @@ GameObject:
   m_Component:
   - component: {fileID: 939481020}
   m_Layer: 0
-  m_Name: Air
-  m_TagString: Untagged
+  m_Name: air
+  m_TagString: Air
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2022,7 +2022,7 @@ GameObject:
   - component: {fileID: 2028736381}
   m_Layer: 0
   m_Name: clock
-  m_TagString: Untagged
+  m_TagString: Clock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

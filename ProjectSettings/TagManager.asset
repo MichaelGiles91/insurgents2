@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Player Respawn
   - Player Respawn Pos
+  - sofa
+  - Clock
+  - Sofa
+  - Air
+  - Candle
   layers:
   - Default
   - TransparentFX

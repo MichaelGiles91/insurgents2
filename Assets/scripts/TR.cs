@@ -60,47 +60,33 @@ public class TR : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    if (isRiddlePlaying)
+      if (isRiddlePlaying)
       {
         HandleRiddleAudio();
       }
-        
-      if (riddleActive)
-      {
-        riddleTimer += Time.deltaTime;
 
-        if (riddleTimer >= RTL)
+        if (riddleActive)
         {
-          FailRiddle();
+          riddleTimer += Time.deltaTime;
+
+          if (riddleTimer >= RTL)
+          {
+            FailRiddle();
+          }
         }
-
-      }
-
-      Clock.SetActive(!Tape.isPlaying);
-      Sofa.SetActive(!Tape.isPlaying);
-      Air.SetActive(!Tape.isPlaying);
-      Candle.SetActive(!Tape.isPlaying);
 
         if (isPlayer && Input.GetKeyDown(KeyCode.E))
         {
-          if (!riddleActive)
+          if (riddleActive)
+          {
+            Interact();
+            return;
+          }
+
+          if (!Tape.isPlaying)
           {
             StartRiddle();
           }
-            
-          else
-          {
-            Interact();
-          }
-        }
-
-        if (isRiddlePlaying)
-        {
-            Timer += Time.deltaTime;
-            if (Timer >= R1ST)
-            {
-                Tape.Play();
-            }
         }
     }
 
@@ -134,7 +120,8 @@ public class TR : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-      Debug.Log("Trigger Entered: " + other.name);
+      Debug.Log("TAG DETECTED: " + other.tag);
+      Debug.Log("Trigger Entered: " + other.name + " tag:" + other.tag);
 
       if (other.CompareTag("Player"))
       {
@@ -142,15 +129,15 @@ public class TR : MonoBehaviour
         recorder.SetActive(true);
       }
 
-      if (other.gameObject == Sofa ||
-        other.gameObject == Air ||
-        other.gameObject == Candle ||
-       other.gameObject == Clock)
+      if (other.CompareTag("Clock") ||
+        other.CompareTag("Air") ||
+        other.CompareTag("Candle") ||
+        other.CompareTag("Sofa"))
 
-      {
-        CurrI = other.gameObject;
-        Debug.Log("CurrI SET TO: " + CurrI.name);
-      }
+        {
+          CurrI = other.gameObject;
+          Debug.Log("CurrI SET TO: " + CurrI.name + " tag:" + CurrI.tag);
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -174,6 +161,12 @@ public class TR : MonoBehaviour
     {
       riddleActive = true;
       riddleTimer = 0f;
+
+      Timer = 0f;
+      isRiddlePlaying = true;
+
+      Tape.time = R1ST;
+      Tape.Play();
     }
 
     void FailRiddle()
@@ -186,6 +179,7 @@ public class TR : MonoBehaviour
       Tape.Play();
 
       Debug.Log("FAILED RIDDLE - PLAYER DEAD");
+      ResetInteraction();
     }
 
     public void RiddleAnswer(bool correct)
@@ -214,6 +208,7 @@ public class TR : MonoBehaviour
 
       CR++;
       riddleTimer = 0f;
+      ResetInteraction();
     }
 
     public void SelectClock()
@@ -235,20 +230,32 @@ public class TR : MonoBehaviour
     {
       if (CurrI == null)
       {
-        Debug.LogWarning("Interact pressed BUT CurrI is NULL");
+        Debug.LogWarning("CurrI NULL");
         return;
       }
 
-      Debug.Log("Interacting with: " + CurrI.name);
+      Debug.Log("Interacting with tag: " + CurrI.tag);
 
-      if (CurrI == Clock)
-      RiddleAnswer(RA1);
+      switch (CurrI.tag)
+      {
+        case "Clock":
+        RiddleAnswer(RA1);
+        break;
 
-      else if (CurrI == Air)
-      RiddleAnswer(RA2);
+        case "Air":
+        RiddleAnswer(RA2);
+        break;
 
-      else if (CurrI == Candle)
-      RiddleAnswer(RA3);
+        case "Candle":
+        RiddleAnswer(RA3);
+         break;
+      }
+    }
+    void ResetInteraction()
+    {
+      CurrI = null;
+      riddleTimer = 0f;
+      Timer = 0f;
     }
 
     void SetupRiddle1()
@@ -265,7 +272,7 @@ public class TR : MonoBehaviour
       RA3 = false;
     }
 
-    void SEtupRiddle3()
+    void SetupRiddle3()
     {
       RA1 = false;
       RA2 = false;
