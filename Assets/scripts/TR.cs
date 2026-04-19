@@ -4,8 +4,14 @@ using TMPro;
 public class TR : MonoBehaviour
 {
     [SerializeField] GameObject recorder;
+    [SerializeField] GameObject Clock;
     [SerializeField] AudioSource Tape;
-    [SerializeField] AudioSource VO;
+    [SerializeField] GameObject Sofa;
+    [SerializeField] GameObject Air;
+    [SerializeField] GameObject Candle;
+    [SerializeField] GameObject CurrI;
+    [SerializeField] int CR;
+    [SerializeField] float RTL = 30f;
     [SerializeField] float R1ST;
     [SerializeField] float R2ST;
     [SerializeField] float R3ST;
@@ -36,7 +42,10 @@ public class TR : MonoBehaviour
     bool air;
     bool candle;
     bool selected;
+    bool riddleActive;
+
     float Timer;
+    float riddleTimer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -50,12 +59,33 @@ public class TR : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    if (isRiddlePlaying)
+      {
+        Timer += Time.deltaTime;
+        HandleRiddleAudio();
+      }
+        
+      if (riddleActive)
+      {
+        riddleTimer += Time.deltaTime;
+
+        if (riddleTimer >= RTL)
+        {
+          FailRiddle();
+        }
+
+      }
+
+      Clock.SetActive(!Tape.isPlaying);
+      Sofa.SetActive(!Tape.isPlaying);
+      Air.SetActive(!Tape.isPlaying);
+      Candle.SetActive(!Tape.isPlaying);
+
         if (isPlayer && Input.GetKeyDown(KeyCode.E))
         {
-            if (!Tape.isPlaying && !VO.isPlaying)
+            if (!Tape.isPlaying)
             {
                 Tape.Play();
-                VO.Play();
             }
         }
 
@@ -64,81 +94,128 @@ public class TR : MonoBehaviour
             Timer += Time.deltaTime;
             if (Timer >= R1ST)
             {
-                VO.Play();
+                Tape.Play();
             }
-
-            if (Timer >= R1ET)
-            {
-                VO.Stop();
-            }
-
-            if (Timer >= R2ST)
-            {
-                VO.Play();
-            }
-
-            if (Timer >= R2ET)
-            {
-                VO.Stop();
-            }
-
-            if (Timer >= R3ST)
-            {
-                VO.Play();
-            }
-
-            if (Timer >= R3ET)
-            {
-                VO.Stop();
-            }
-
-            if (Timer >= EDST)
-            {
-                VO.Play();
-            }
-
-            if (Timer >= EDET)
-            {
-                VO.Stop();
-            }
-
-            if(clock == selected && RA1 == true)
-            {
-              VO.Play();
-            }
-
-            else
-            {
-              
-            }
-
         }
     }
 
-    void RiddleAnswer()
+    void HandleRiddleAudio()
     {
-      clock = RA1;
-      air = RA2;
-      candle = RA3;
-    }
+        if (CR == 1)
+        {
+            if (Timer >= R1ST && !Tape.isPlaying)
+                Tape.Play();
 
- 
+            if (Timer >= R1ET)
+                Tape.Stop();
+        }
+        else if (CR == 2)
+        {
+            if (Timer >= R2ST && !Tape.isPlaying)
+                Tape.Play();
+
+            if (Timer >= R2ET)
+                Tape.Stop();
+        }
+        else if (CR == 3)
+        {
+            if (Timer >= R3ST && !Tape.isPlaying)
+                Tape.Play();
+
+            if (Timer >= R3ET)
+                Tape.Stop();
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-      if(other.CompareTag("Player"))
-        { 
-          isPlayer = true;
-          recorder.SetActive(true);
-        }
+      if (other.CompareTag("Player"))
+      {
+        isPlayer = true;
+        recorder.SetActive(true);
+      }
+
+      if (other.gameObject == Sofa ||
+         other.gameObject == Air ||
+         other.gameObject == Candle ||
+         other.gameObject == Clock)
+      {
+        CurrI = other.gameObject;
+      }
     }
     
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-          isPlayer = false;
-          recorder.SetActive(false);
-        }
+      if (other.CompareTag("Player"))
+      {
+        isPlayer = false;
+        recorder.SetActive(false);
+      }
+
+      if (other.gameObject == CurrI)
+      {
+        CurrI = null;
+      }
+    }
+
+    void StartRiddle()
+    {
+      riddleActive = true;
+      riddleTimer = 0f;
+    }
+
+    void FailRiddle()
+    {
+      riddleActive = false;
+
+      Tape.Stop();
+
+      Tape.time = RI1ST;
+      Tape.Play();
+
+      Debug.Log("FAILED RIDDLE - PLAYER DEAD");
+    }
+
+    public void RiddleAnswer(bool correct)
+    {
+      if (correct)
+      {
+        CompleteRiddle();
+      }
+
+      else
+      {
+        FailRiddle();
+      }
+    }
+
+    void CompleteRiddle()
+    {
+      riddleActive = false;
+
+      Tape.Stop();
+
+      Tape.time = RC1st;
+      Tape.Play();
+
+      Debug.Log("RIDDLE COMPLETED");
+
+      CR++;
+      riddleTimer = 0f;
+    }
+
+    public void SelectClock()
+    {
+      RiddleAnswer(RA1);
+    }
+
+    public void SelectAir()
+    {
+      RiddleAnswer(RA2);
+    }
+
+    public void SelectCandle()
+    {
+      RiddleAnswer(RA3);
     }
 }

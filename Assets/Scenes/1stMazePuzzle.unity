@@ -1697,8 +1697,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::tapeRecorder
   recorder: {fileID: 438993681}
+  Clock: {fileID: 2028736379}
   Tape: {fileID: 1064979102}
-  VO: {fileID: 1064979102}
+  Sofa: {fileID: 512918591}
+  Air: {fileID: 939481019}
+  Candle: {fileID: 679898258}
   R1ST: 0
   R2ST: 165
   R3ST: 250
@@ -1707,18 +1710,18 @@ MonoBehaviour:
   R3ET: 269
   EDST: 291
   EDET: 352
-  RI1ST: 0
-  RI2ST: 0
-  RI3ST: 0
-  RI1ET: 0
-  RI2ET: 0
-  RI3ET: 0
-  RC1st: 0
-  RC2ST: 0
-  RC3ST: 0
-  RC1ET: 0
-  RC2ET: 0
-  RC3ET: 0
+  RI1ST: 143
+  RI2ST: 187
+  RI3ST: 239
+  RI1ET: 154
+  RI2ET: 204
+  RI3ET: 273
+  RC1st: 148
+  RC2ST: 217
+  RC3ST: 278
+  RC1ET: 161
+  RC2ET: 229
+  RC3ET: 290
 --- !u!4 &1064979105
 Transform:
   m_ObjectHideFlags: 0
@@ -2012,8 +2015,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2028736383}
   - component: {fileID: 2028736382}
-  - component: {fileID: 2028736381}
   - component: {fileID: 2028736380}
+  - component: {fileID: 2028736381}
   m_Layer: 0
   m_Name: clock
   m_TagString: Untagged
@@ -2067,7 +2070,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 9d462c6c4b8d2c64288c2674c15bd260, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
