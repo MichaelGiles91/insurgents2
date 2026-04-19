@@ -11,6 +11,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int meleeDamage;
     [SerializeField] float attackRate = 1f;
     [SerializeField] float attackRange = 2f;
+    [SerializeField] Animator animate;
+    [SerializeField] int animateTransitionSpeed;
 
     float attackTimer;
     Transform player;
@@ -30,12 +32,15 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
+        locomotionAnim();
+
         attackTimer += Time.deltaTime;
         playerDirection = (gameManager.instance.player.transform.position - transform.position);
 
         agent.SetDestination(gameManager.instance.player.transform.position);
 
         float distance = Vector3.Distance(transform.position, player.position);
+
 
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
@@ -46,6 +51,13 @@ public class EnemyAI : MonoBehaviour, IDamage
             attack();
 
         }
+    }
+    void locomotionAnim()
+    {
+        float agentCurrentSpeed = agent.velocity.normalized.magnitude;
+        float agentSpeedAnim = animate.GetFloat("Speed");
+
+        animate.SetFloat("Speed", Mathf.MoveTowards(agentSpeedAnim, agentCurrentSpeed, Time.deltaTime * animateTransitionSpeed));
     }
     void faceTarget()
     {

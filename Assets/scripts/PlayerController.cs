@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class PlayerController : MonoBehaviour, IDamage,Iheal, IOpen, IPush
+public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
@@ -24,6 +24,11 @@ public class PlayerController : MonoBehaviour, IDamage,Iheal, IOpen, IPush
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
 
+    [SerializeField] int batDmg;
+    [SerializeField] float batRange = 2f;
+    [SerializeField] float swingRate = 0.6f;
+    [SerializeField] GameObject batModel;
+
     [SerializeField] GameObject gunModel;
 
     [SerializeField] AudioSource aud;
@@ -32,11 +37,14 @@ public class PlayerController : MonoBehaviour, IDamage,Iheal, IOpen, IPush
     int HPOrig;
     float shootTimer;
     int gunListPos;
+    bool hasBat;
+    bool isSwinging;
+    float batTimer;
 
     Vector3 moveDir;
     Vector3 playerVel;
     Vector3 pushVel;
-    
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -52,7 +60,7 @@ public class PlayerController : MonoBehaviour, IDamage,Iheal, IOpen, IPush
         movement();
         sprint();
         updatePlayerUI();
-        
+
     }
 
     public void spawnPlayer()
@@ -66,10 +74,11 @@ public class PlayerController : MonoBehaviour, IDamage,Iheal, IOpen, IPush
     void movement()
     {
         shootTimer += Time.deltaTime;
+        batTimer += Time.deltaTime;
 
         pushVel = Vector3.Lerp(pushVel, Vector3.zero, pushVelTime * Time.deltaTime);
 
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist);
         if (controller.isGrounded)
         {
             jumpCount = 0;
@@ -83,13 +92,16 @@ public class PlayerController : MonoBehaviour, IDamage,Iheal, IOpen, IPush
 
         playerVel.y -= gravity * Time.deltaTime;
 
-        //if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[gunListPos].ammoCur > 0 && shootTimer >= shootRate)
-        //{
-        //    shoot();
-        //}
-        if (Input.GetButton("Fire1") && shootTimer >= shootRate)
+        if (Input.GetButtonDown("Fire1"))
         {
-            shoot();
+            if (hasBat && batTimer >= swingRate && !isSwinging)
+            {
+                StartCoroutine(BatSwing());
+            }
+            else if (gunList.Count > 0 && gunList[gunListPos].ammoCur > 0 && shootTimer >= shootRate)
+            {
+                shoot();
+            }
         }
 
         selectGun();
@@ -109,7 +121,8 @@ public class PlayerController : MonoBehaviour, IDamage,Iheal, IOpen, IPush
         if (Input.GetButtonDown("sprint"))
         {
             Speed *= SprintMod;
-        }else if (Input.GetButtonUp("sprint"))
+        }
+        else if (Input.GetButtonUp("sprint"))
         {
             Speed /= SprintMod;
         }
@@ -118,18 +131,18 @@ public class PlayerController : MonoBehaviour, IDamage,Iheal, IOpen, IPush
     {
         shootTimer = 0;
 
-        //gunList[gunListPos].ammoCur--;
-        //aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootSoundVol);
+        gunList[gunListPos].ammoCur--;
+        aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootSoundVol);
 
         RaycastHit hit;
-        if(Physics.Raycast(Camera.main.transform.position,Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
         {
             Debug.Log(hit.collider.name);
 
-            //Instantiate(gunList[gunListPos].hitEffect, hit.point, Quaternion.identity);
+            Instantiate(gunList[gunListPos].hitEffect, hit.point, Quaternion.identity);
 
             IDamage dmg = hit.collider.GetComponent<IDamage>();
-            if(dmg != null)
+            if (dmg != null)
             {
                 dmg.takeDamage(shootDamage);
             }
@@ -149,20 +162,20 @@ public class PlayerController : MonoBehaviour, IDamage,Iheal, IOpen, IPush
         updatePlayerUI();
         StartCoroutine(flashScreen());
 
-        if(HP <= 0)
+        if (HP <= 0)
         {
             gameManager.instance.youLose();
         }
     }
     public void healDamage(int healAmount)
     {
-         HP += healAmount;
+        HP += healAmount;
 
-        if(HP > HPOrig )
+        if (HP > HPOrig)
         {
             HP = HPOrig;
         }
-       
+
 
         updatePlayerUI();
     }
@@ -205,12 +218,12 @@ public class PlayerController : MonoBehaviour, IDamage,Iheal, IOpen, IPush
 
     void selectGun()
     {
-        if(Input.GetAxis("Mouse ScrollWheel") > 0 && gunListPos < gunList.Count -1)
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && gunListPos < gunList.Count - 1)
         {
             gunListPos++;
             changeGun();
         }
-        else if(Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
         {
             gunListPos--;
             changeGun();
@@ -220,5 +233,90 @@ public class PlayerController : MonoBehaviour, IDamage,Iheal, IOpen, IPush
     public void getPushVel(Vector3 pushAmount)
     {
         pushVel += pushAmount;
+    }
+    IEnumerator BatSwing()
+    {
+        isSwinging = true;
+        batTimer = 0f;
+
+        Vector3 startPos = batModel.transform.localPosition;
+        Quaternion startRot = batModel.transform.localRotation;
+
+        Vector3 windupPos = startPos + new Vector3(0.08f, 0.05f, -0.08f);
+        Quaternion windupRot = startRot * Quaternion.Euler(-20f, -10f, 15f);
+
+        Vector3 hitPos = startPos + new Vector3(0.0f, -0.18f, 0.18f);
+        Quaternion hitRot = startRot * Quaternion.Euler(55f, 0f, 0f);
+
+        float t = 0f;
+
+        // quick windup
+        while (t < 1f)
+        {
+            t += Time.deltaTime * 14f;
+            batModel.transform.localPosition = Vector3.Lerp(startPos, windupPos, t);
+            batModel.transform.localRotation = Quaternion.Lerp(startRot, windupRot, t);
+            yield return null;
+        }
+
+        t = 0f;
+        bool didDamage = false;
+
+        // fast bonk forward/down
+        while (t < 1f)
+        {
+            t += Time.deltaTime * 24f;
+            batModel.transform.localPosition = Vector3.Lerp(windupPos, hitPos, t);
+            batModel.transform.localRotation = Quaternion.Lerp(windupRot, hitRot, t);
+
+            if (!didDamage && t >= 0.55f)
+            {
+                didDamage = true;
+
+                RaycastHit hit;
+                if (Physics.SphereCast(Camera.main.transform.position, 0.45f, Camera.main.transform.forward, out hit, batRange, ~ignoreLayer))
+                {
+                    Debug.Log("Bat hit: " + hit.collider.name);
+
+                    IDamage dmg = hit.collider.GetComponent<IDamage>();
+                    if (dmg != null)
+                    {
+                        dmg.takeDamage(batDmg);
+                    }
+                }
+            }
+
+            yield return null;
+        }
+
+        t = 0f;
+
+        // return to idle
+        while (t < 1f)
+        {
+            t += Time.deltaTime * 16f;
+            batModel.transform.localPosition = Vector3.Lerp(hitPos, startPos, t);
+            batModel.transform.localRotation = Quaternion.Lerp(hitRot, startRot, t);
+            yield return null;
+        }
+
+        batModel.transform.localPosition = startPos;
+        batModel.transform.localRotation = startRot;
+
+        isSwinging = false;
+    }
+    public void getBat()
+    {
+        hasBat = true;
+
+        if (batModel != null)
+        {
+            batModel.SetActive(true);
+
+        }
+        if (gunModel != null)
+        {
+            gunModel.SetActive(false);
+        }
     }
 }
