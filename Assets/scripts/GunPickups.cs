@@ -1,20 +1,27 @@
 using UnityEngine;
 
-public class GunPickups : MonoBehaviour
+public class GunPickup : MonoBehaviour, IPickup
 {
-    [SerializeField] gunStats gun;
+    public gunStats gun;
 
-
-    private void OnTriggerEnter(Collider other)
+    public void pickup(PlayerController player)
     {
-        IPickup pik = other.GetComponent<IPickup>();
+        ObjectiveManager.instance.CompleteObjective();
+        player.getGunStats(gun);
+        Destroy(gameObject);
+    }
 
-        if( pik != null )
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
-            gun.ammoCur = gun.ammoMax;
-            pik.getGunStats(gun);
-            Destroy(gameObject);
+            PlayerController player = other.GetComponent<PlayerController>();
 
+            if (player != null)
+            {
+                player.getGunStats(gun);
+                Destroy(gameObject);
+            }
         }
     }
 }
