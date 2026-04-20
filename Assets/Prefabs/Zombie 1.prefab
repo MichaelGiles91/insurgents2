@@ -3461,7 +3461,7 @@ MonoBehaviour:
   meleeDamage: 0
   attackRate: 1
   attackRange: 2
-  animate: {fileID: 0}
+  animate: {fileID: 6697808384625160769}
   animateTransitionSpeed: 0
 --- !u!1 &4778445941950152462
 GameObject:
