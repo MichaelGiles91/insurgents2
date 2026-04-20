@@ -165,6 +165,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     }
     void shoot()
     {
+        //if (isReloading) return;
         if (gunList.Count == 0) return;
         if (gunListPos >= gunList.Count) return;
 
@@ -177,24 +178,14 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         shootTimer = 0;
 
         gunModel.transform.localPosition -= new Vector3(0, 0, recoilAmount);
+        if (gunListPos >= gunList.Count)
+            gunListPos = 0;
+        aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootSoundVol);
 
-        RaycastHit hit;
-        
+        GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
 
-        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0f));
-
-        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.green, 2f);
-        if (Physics.Raycast(ray, out hit, shootDist, ~ignoreLayer))
-        {
-            
-
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
-
-            if (dmg != null)
-            {
-                dmg.takeDamage(shootDamage);
-            }
-        }
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        rb.linearVelocity = Camera.main.transform.forward * bulletForce;
 
         gunList[gunListPos].ammoCur--;
         updateAmmoUI();
