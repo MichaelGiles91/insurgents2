@@ -4,6 +4,8 @@ using UnityEngine.Rendering;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
+using TMPro;
 
 
 public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
@@ -23,44 +25,87 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
+    [SerializeField] gunStats startingGun;
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] Transform shootPoint;
+    [SerializeField] float bulletForce = 20f;
+    [SerializeField] TMP_Text ammoText;
 
-    [SerializeField] int batDmg;
-    [SerializeField] float batRange = 2f;
-    [SerializeField] float swingRate = 0.6f;
-    [SerializeField] GameObject batModel;
+    [SerializeField] float recoilAmount = 0.1f;
+    [SerializeField] float recoilSpeed = 10f;
 
     [SerializeField] GameObject gunModel;
 
     [SerializeField] AudioSource aud;
+    [SerializeField] float reloadTime = 1.5f;
+    [SerializeField] AudioClip reloadSound;
+
+
+    bool isReloading = false;
+    public bool isPowerWeapon;
+    public float powerDuration = 10f;
+    public AudioClip powerMusic;
+    bool isInvincible = false;
+    int originalDamage;
+    AudioClip originalMusic;
+    bool isSwinging = false;
+    public float swingCooldown = 0.5f;
+    float nextSwingTime = 0f;
+    public Transform gun_Model;
+    
 
     int jumpCount;
     int HPOrig;
     float shootTimer;
     int gunListPos;
-    bool hasBat;
-    bool isSwinging;
-    float batTimer;
 
     Vector3 moveDir;
     Vector3 playerVel;
     Vector3 pushVel;
+    Vector3 gunStartPos;
+    GameObject currentGun;
+    Quaternion gunStartRot;
+    //Transform gunVisual;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         HPOrig = HP;
         spawnPlayer();
+        aud = GetComponent<AudioSource>();
 
-
+        if (startingGun != null)
+        {
+            getGunStats(startingGun);
+        }
+        gunStartPos = gun_Model.localPosition;
+        gunStartRot = gun_Model.localRotation;
     }
 
     // Update is called once per frame
     void Update()
     {
+        shootTimer += Time.deltaTime;
         movement();
         sprint();
         updatePlayerUI();
+        interact();
 
+        if (!isSwinging)
+        {
+            gunModel.transform.localPosition = Vector3.Lerp(
+                gunModel.transform.localPosition,
+                gunStartPos,
+                Time.deltaTime * recoilSpeed);
+        }
+
+
+
+        gunModel.transform.localPosition = Vector3.Lerp(
+     gunModel.transform.localPosition,
+     gunStartPos,
+     recoilSpeed * Time.deltaTime
+ );
     }
 
     public void spawnPlayer()
@@ -74,7 +119,6 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     void movement()
     {
         shootTimer += Time.deltaTime;
-        batTimer += Time.deltaTime;
 
         pushVel = Vector3.Lerp(pushVel, Vector3.zero, pushVelTime * Time.deltaTime);
 
@@ -92,16 +136,9 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
 
         playerVel.y -= gravity * Time.deltaTime;
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && gunList.Count > 0 && gunList[gunListPos].ammoCur > 0 && shootTimer >= shootRate)
         {
-            if (hasBat && batTimer >= swingRate && !isSwinging)
-            {
-                StartCoroutine(BatSwing());
-            }
-            else if (gunList.Count > 0 && gunList[gunListPos].ammoCur > 0 && shootTimer >= shootRate)
-            {
-                shoot();
-            }
+            shoot();
         }
 
         selectGun();
@@ -129,35 +166,143 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     }
     void shoot()
     {
+        //if (isReloading) return;
+        if (gunList.Count == 0) return;
+        if (gunListPos >= gunList.Count) return;
+
+        if (gunList[gunListPos].isPowerWeapon)
+        {
+            SwingBat();
+            return;
+        }
+
         shootTimer = 0;
 
-        gunList[gunListPos].ammoCur--;
+        gunModel.transform.localPosition -= new Vector3(0, 0, recoilAmount);
+        if (gunListPos >= gunList.Count)
+            gunListPos = 0;
         aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootSoundVol);
 
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
+        GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
+
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        rb.linearVelocity = Camera.main.transform.forward * bulletForce;
+
+        gunList[gunListPos].ammoCur--;
+        updateAmmoUI();
+
+        Debug.Log("SHOOTING");
+    }
+
+    void SwingBat()
+    {
+        Debug.Log("BAT SWING");
+
+        if (!isSwinging)
         {
-            Debug.Log(hit.collider.name);
+            StartCoroutine(BatSwingAnim());
+        }
 
-            Instantiate(gunList[gunListPos].hitEffect, hit.point, Quaternion.identity);
+        RaycastHit hit;
 
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
-            if (dmg != null)
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 3f))
+        {
+            if (hit.collider.CompareTag("Enemy"))
             {
-                dmg.takeDamage(shootDamage);
+                IDamage dmg = hit.collider.GetComponent<IDamage>();
+
+                if (dmg != null)
+                {
+                    dmg.takeDamage(shootDamage);
+                }
             }
         }
     }
 
     void reload()
     {
-        if (Input.GetButtonDown("Reload") && gunList.Count > 0)
+        if (isReloading) return;
+        if (Input.GetButtonDown("Reload") && !isReloading && gunList.Count > 0)
         {
-            gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
+            StartCoroutine(ReloadRoutine());
         }
+    }
+
+    IEnumerator BatSwingAnim()
+    {
+        isSwinging = true;
+
+        float t = 0;
+
+        Vector3 startPos = gunStartPos;
+        Quaternion startRot = gunStartRot;
+
+
+        Quaternion readyRot = Quaternion.Euler(60f, 100f, 20f);
+
+        gun_Model.localRotation = readyRot;
+        gun_Model.localPosition = startPos + new Vector3(0.7f, -0.4f, 0.2f);
+
+        yield return new WaitForSeconds(0.05f);
+
+
+        Quaternion hitRot = Quaternion.Euler(0f, -160f, -30f);
+
+
+        bool didHitPause = false;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime * 4f;
+
+            gun_Model.localRotation = Quaternion.Lerp(readyRot, hitRot, t);
+
+            gun_Model.localPosition = Vector3.Lerp(
+                startPos + new Vector3(0.2f, -0.2f, 0.1f),
+                startPos + new Vector3(-1.2f, -0.2f, 0.3f),
+                t
+            );
+
+
+            if (!didHitPause && t > 0.5f)
+            {
+                didHitPause = true;
+                yield return new WaitForSeconds(0.05f);
+            }
+
+            yield return null;
+        }
+
+
+        float resetT = 0;
+
+        while (resetT < 1)
+        {
+            resetT += Time.deltaTime * 6f;
+
+            gun_Model.localPosition = Vector3.Lerp(
+                gun_Model.localPosition,
+                startPos,
+                resetT
+            );
+
+            gun_Model.localRotation = Quaternion.Lerp(
+                gun_Model.localRotation,
+                startRot,
+                resetT
+            );
+
+            yield return null;
+        }
+
+        gun_Model.localPosition = startPos;
+        gun_Model.localRotation = startRot;
+
+        isSwinging = false;
     }
     public void takeDamage(int amount)
     {
+        if (isInvincible) return;
         HP -= amount;
         updatePlayerUI();
         StartCoroutine(flashScreen());
@@ -190,6 +335,8 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     public void updatePlayerUI()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+
+        gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
     }
     public void getGunStats(gunStats gun)
     {
@@ -200,20 +347,43 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         shootDist = gun.shootDist;
         shootRate = gun.shootRate;
 
-        gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+
+
+        gunModel.SetActive(true);
 
         changeGun();
+        updateAmmoUI();
+
+        if (gun.isPowerWeapon)
+        {
+            StartCoroutine(powerWeaponRoutine(gun));
+        }
     }
 
     void changeGun()
     {
+        foreach (Transform child in gun_Model.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        currentGun = Instantiate(gunList[gunListPos].gunModel, gunModel.transform);
+
+
+        currentGun.transform.localPosition = Vector3.zero;
+        currentGun.transform.localRotation = Quaternion.identity;
+
+        shootPoint = currentGun.transform.Find("Shoot Point");
+
+        if (shootPoint == null)
+        {
+            Debug.LogError("NO SHOOT POINT FOUND ON mEW GUN");
+        }
+
         shootDamage = gunList[gunListPos].shootDamage;
         shootDist = gunList[gunListPos].shootDist;
         shootRate = gunList[gunListPos].shootRate;
-
-        gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].gunModel.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[gunListPos].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+        updateAmmoUI();
     }
 
     void selectGun()
@@ -234,89 +404,123 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     {
         pushVel += pushAmount;
     }
-    IEnumerator BatSwing()
+
+    void interact()
     {
-        isSwinging = true;
-        batTimer = 0f;
-
-        Vector3 startPos = batModel.transform.localPosition;
-        Quaternion startRot = batModel.transform.localRotation;
-
-        Vector3 windupPos = startPos + new Vector3(0.08f, 0.05f, -0.08f);
-        Quaternion windupRot = startRot * Quaternion.Euler(-20f, -10f, 15f);
-
-        Vector3 hitPos = startPos + new Vector3(0.0f, -0.18f, 0.18f);
-        Quaternion hitRot = startRot * Quaternion.Euler(55f, 0f, 0f);
-
-        float t = 0f;
-
-        // quick windup
-        while (t < 1f)
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            t += Time.deltaTime * 14f;
-            batModel.transform.localPosition = Vector3.Lerp(startPos, windupPos, t);
-            batModel.transform.localRotation = Quaternion.Lerp(startRot, windupRot, t);
-            yield return null;
-        }
+            RaycastHit hit;
 
-        t = 0f;
-        bool didDamage = false;
-
-        // fast bonk forward/down
-        while (t < 1f)
-        {
-            t += Time.deltaTime * 24f;
-            batModel.transform.localPosition = Vector3.Lerp(windupPos, hitPos, t);
-            batModel.transform.localRotation = Quaternion.Lerp(windupRot, hitRot, t);
-
-            if (!didDamage && t >= 0.55f)
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 3f))
             {
-                didDamage = true;
+                IPickup pickup = hit.collider.GetComponent<IPickup>();
 
-                RaycastHit hit;
-                if (Physics.SphereCast(Camera.main.transform.position, 0.45f, Camera.main.transform.forward, out hit, batRange, ~ignoreLayer))
+                if (pickup != null)
                 {
-                    Debug.Log("Bat hit: " + hit.collider.name);
-
-                    IDamage dmg = hit.collider.GetComponent<IDamage>();
-                    if (dmg != null)
-                    {
-                        dmg.takeDamage(batDmg);
-                    }
+                    pickup.pickup(this);
                 }
             }
-
-            yield return null;
         }
-
-        t = 0f;
-
-        // return to idle
-        while (t < 1f)
-        {
-            t += Time.deltaTime * 16f;
-            batModel.transform.localPosition = Vector3.Lerp(hitPos, startPos, t);
-            batModel.transform.localRotation = Quaternion.Lerp(hitRot, startRot, t);
-            yield return null;
-        }
-
-        batModel.transform.localPosition = startPos;
-        batModel.transform.localRotation = startRot;
-
-        isSwinging = false;
     }
-    public void getBat()
+    void updateAmmoUI()
     {
-        hasBat = true;
+        if (gunList.Count == 0) return;
 
-        if (batModel != null)
-        {
-            batModel.SetActive(true);
-
-        }
-        if (gunModel != null)
-        {
-            gunModel.SetActive(false);
-        }
+        ammoText.text = $"{gunList[gunListPos].ammoCur} / {gunList[gunListPos].ammoMax}";
     }
+
+    // 🔥 FULL RELOAD ANIMATION (SLOW + SMOOTH)
+
+    IEnumerator ReloadRoutine()
+    {
+        isReloading = true;
+
+        Vector3 startPos = gun_Model.localPosition;
+        Vector3 downPos = startPos + new Vector3(0, -1.5f, 0); // deeper drop
+
+        float t = 0;
+
+        // 🔻 MOVE DOWN (faster)
+        while (t < 1)
+        {
+            t += Time.deltaTime * 3f;
+            gun_Model.localPosition = Vector3.Lerp(startPos, downPos, t);
+            yield return null;
+        }
+
+        // 🔊 PLAY SOUND
+        if (reloadSound != null)
+        {
+            aud.PlayOneShot(reloadSound);
+        }
+
+        // ⏱ WAIT (main reload time)
+        yield return new WaitForSeconds(reloadTime * 0.8f);
+
+        // 🔄 REFILL AMMO
+        gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
+        updateAmmoUI();
+
+        t = 0;
+
+        // 🔺 MOVE BACK UP (slower for weight)
+        while (t < 1)
+        {
+            t += Time.deltaTime * 1.5f;
+            gun_Model.localPosition = Vector3.Lerp(downPos, startPos, t);
+            yield return null;
+        }
+
+        gun_Model.localPosition = startPos;
+
+        isReloading = false;
+    }
+
+    IEnumerator powerWeaponRoutine(gunStats gun)
+    {
+
+        originalDamage = shootDamage;
+        originalMusic = aud.clip;
+
+
+        isInvincible = true;
+        shootDamage = gun.shootDamage;
+
+
+        if (gun.powerMusic != null)
+        {
+            aud.Stop();
+            aud.clip = gun.powerMusic;
+            aud.loop = true;
+            aud.Play();
+        }
+
+        yield return new WaitForSeconds(gun.powerDuration);
+
+
+        isInvincible = false;
+        shootDamage = originalDamage;
+
+
+        gunList.Remove(gun);
+
+        if (gunList.Count > 0)
+        {
+            gunListPos = 0;
+            changeGun();
+        }
+        else
+        {
+            foreach (Transform child in gun_Model.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+
+        aud.Stop();
+        aud.clip = originalMusic;
+        aud.Play();
+    }
+
 }
