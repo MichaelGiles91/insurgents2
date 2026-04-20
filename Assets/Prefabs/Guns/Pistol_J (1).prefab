@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fcd165082e592549890842de9cbba9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GunPickup
-  gun: {fileID: 11400000, guid: bb9e1507c4f79c941afc51697b7b6d9b, type: 2}
+  gun: {fileID: 11400000, guid: 26f851cf90957c74bbcbaa2d99972005, type: 2}
 --- !u!1 &2240108599714982449
 GameObject:
   m_ObjectHideFlags: 0

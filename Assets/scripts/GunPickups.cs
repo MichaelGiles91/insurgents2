@@ -10,6 +10,6 @@ public class GunPickup : MonoBehaviour, IPickup
 
         ObjectiveManager.instance.CompleteObjective();
 
-        Destroy(gameObject);
+        Destroy(transform.root.gameObject);
     }
 }

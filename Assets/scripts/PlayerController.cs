@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     [SerializeField] float recoilSpeed = 10f;
 
     [SerializeField] GameObject gunModel;
+    [SerializeField] Camera shootCam;
 
     [SerializeField] AudioSource aud;
     [SerializeField] float reloadTime = 1.5f;
@@ -175,20 +176,30 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
             return;
         }
 
+
         shootTimer = 0;
 
-        gunModel.transform.localPosition -= new Vector3(0, 0, recoilAmount);
-        if (gunListPos >= gunList.Count)
-            gunListPos = 0;
+        gunList[gunListPos].ammoCur--;
         aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootSoundVol);
 
-        GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
+        Ray ray = shootCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
-        Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        rb.linearVelocity = Camera.main.transform.forward * bulletForce;
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, shootDist, ~ignoreLayer))
+        {
+            Debug.Log(hit.collider.name);
 
-        gunList[gunListPos].ammoCur--;
-        updateAmmoUI();
+            if (gunList[gunListPos].hitEffect != null)
+                Instantiate(gunList[gunListPos].hitEffect, hit.point, Quaternion.identity);
+
+            IDamage dmg = hit.collider.GetComponentInParent<IDamage>();
+            if (dmg != null)
+            {
+                dmg.takeDamage(shootDamage);
+            }
+        }
+
+
 
         Debug.Log("SHOOTING");
     }
@@ -414,6 +425,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
             {
                 IPickup pickup = hit.collider.GetComponent<IPickup>();
 
+                Debug.Log(hit.collider.name);
                 if (pickup != null)
                 {
                     pickup.pickup(this);
