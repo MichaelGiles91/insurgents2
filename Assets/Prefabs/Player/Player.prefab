@@ -562,29 +562,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625e1d3a58d7c1445a60c452fd4ac780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  controller: {fileID: 0}
+  controller: {fileID: 6642819762404013951}
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 0
-  HP: 10
-  Speed: 1
-  SprintMod: 1
+  HP: 100
+  Speed: 5
+  SprintMod: 2
   JumpSpeed: 1
   JumpMax: 1
-  gravity: 1
+  gravity: 9
   pushVelTime: 1
   gunList: []
-  shootDamage: 0
-  shootDist: 0
-  shootRate: 0
+  shootDamage: 1
+  shootDist: 100
+  shootRate: 1
   startingGun: {fileID: 0}
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 2913256777252581994, guid: dbee9677d5947b444b3e8012614ba4fe, type: 3}
   shootPoint: {fileID: 0}
   bulletForce: 20
   ammoText: {fileID: 0}
   recoilAmount: 0.1
   recoilSpeed: 10
-  gunModel: {fileID: 0}
+  gunModel: {fileID: 2913256777252581994, guid: dbee9677d5947b444b3e8012614ba4fe, type: 3}
   aud: {fileID: 0}
   reloadTime: 1.5
   reloadSound: {fileID: 0}
