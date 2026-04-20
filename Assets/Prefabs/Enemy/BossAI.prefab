@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2824003732076277305}
   - component: {fileID: 6651730742326144047}
   - component: {fileID: 429684118462420108}
+  - component: {fileID: 2712620467078507170}
   m_Layer: 0
   m_Name: BossAI
   m_TagString: Untagged
@@ -132,14 +133,14 @@ MonoBehaviour:
   agent: {fileID: 429684118462420108}
   fireBall: {fileID: 6411377967987673738, guid: 81868a39dc95e2347bae0772ef122d21, type: 3}
   shootPos: {fileID: 4782911477057866833}
-  model: {fileID: 0}
-  bossHP: 200
+  model: {fileID: 1245933552806051245}
+  bossHP: 50
   bossSpeed: 5
   shootRate: 1
-  jumpRate: 0
-  jumpForce: 0
-  target: {fileID: 147023646130132008, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
-  minumumDistance: 0
+  jumpRate: 1
+  jumpForce: 10
+  target: {fileID: 0}
+  minumumDistance: 5
 --- !u!195 &429684118462420108
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -162,6 +163,33 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!54 &2712620467078507170
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993462894680689585}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 1
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &9220222766907396164
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,7 +215,7 @@ Transform:
   m_GameObject: {fileID: 9220222766907396164}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.494, y: 0.057, z: 0}
+  m_LocalPosition: {x: 0.08, y: 0.057, z: 1.232}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
