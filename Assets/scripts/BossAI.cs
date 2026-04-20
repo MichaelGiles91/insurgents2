@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
-public class BossAI : MonoBehaviour
+public class BossAI : MonoBehaviour, IDamage
 {
     [SerializeField] NavMeshAgent agent;
     [SerializeField] GameObject fireBall;
     [SerializeField] Transform shootPos;
+    [SerializeField] Renderer model;
    
     [SerializeField]int bossHP;
     [SerializeField]int bossSpeed;
@@ -13,6 +15,7 @@ public class BossAI : MonoBehaviour
     [SerializeField] float jumpRate;
     [SerializeField] float jumpForce;
 
+    Rigidbody rb;
     float jumpTimer;
    
 
@@ -20,44 +23,34 @@ public class BossAI : MonoBehaviour
     public float minumumDistance;
 
     float shootTimer;
-   
+    Color bossColor;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        bossColor = model.material.color;
+        rb.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        ////shootTimer += Time.deltaTime;
-
-        ////if (Vector3.Distance(transform.position, target.position) > minumumDistance)
-        ////{
-        ////    transform.position = Vector3.MoveTowards(transform.position, target.position, bossSpeed * Time.deltaTime);
-        ////    shoot();
-        ////}
-        ////else
-        ////{
-
-        ////}
-        ///
         shootTimer += Time.deltaTime;
         jumpTimer += Time.deltaTime;
 
         agent.SetDestination(gameManager.instance.player.transform.position);
         
-            if (shootTimer >= shootRate)
-            {
-                shoot();
-            }
-            if(jumpTimer >= jumpRate)
+        if (shootTimer >= shootRate)
         {
-            bossJump();
+           shoot();
+            
         }
-        
+        if(jumpTimer >= jumpRate)
+        {
+           bossJump();
+        }
+    
+
     }
 
     void shoot()
@@ -68,8 +61,32 @@ public class BossAI : MonoBehaviour
 
  void bossJump()
     {
+        
         jumpTimer = 0;
+      
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
     }
+
+    public void takeDamage(int amount)
+    {
+        bossHP -=amount;
+        if(bossHP <= 0)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            StartCoroutine(flashRed());
+
+        }
+    }
+    IEnumerator flashRed()
+    {
+        model.material.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        model.material.color = bossColor;
+    }
+
 }
 
