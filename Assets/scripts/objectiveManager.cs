@@ -1,12 +1,17 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ObjectiveManager : MonoBehaviour
 {
     public static ObjectiveManager instance;
 
     public List<Transform> objectives = new List<Transform>();
+    public List<string> objectiveNames = new List<string>();
+
     int currentIndex = 0;
+
+    public TextMeshProUGUI objectiveText;
 
     objectiveMarker marker;
 
@@ -18,7 +23,11 @@ public class ObjectiveManager : MonoBehaviour
     void Start()
     {
         marker = FindObjectOfType<objectiveMarker>();
-        SetObjective(0);
+
+        if (objectives.Count > 0)
+        {
+            SetObjective(0);
+        }
     }
 
     public void SetObjective(int index)
@@ -27,9 +36,17 @@ public class ObjectiveManager : MonoBehaviour
 
         currentIndex = index;
 
-        if (marker != null)
+        if (marker != null && currentIndex < objectives.Count)
         {
             marker.target = objectives[currentIndex];
+        }
+
+        if (objectiveText != null)
+        {
+            if (currentIndex < objectiveNames.Count)
+                objectiveText.text = objectiveNames[currentIndex];
+            else
+                objectiveText.text = "Objective Updated";
         }
     }
 
@@ -43,7 +60,10 @@ public class ObjectiveManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("ALL OBJECTIVES COMPLETE 🎉");
+            if (objectiveText != null)
+            {
+                objectiveText.text = "";
+            }
 
             if (marker != null)
             {
