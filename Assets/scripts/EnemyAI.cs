@@ -57,7 +57,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         float agentCurrentSpeed = agent.velocity.normalized.magnitude;
         float agentSpeedAnim = animate.GetFloat("Speed");
 
-        animate.SetFloat("Speed", Mathf.MoveTowards(agentSpeedAnim, agentCurrentSpeed, Time.deltaTime * animateTransitionSpeed));
+        animate.SetFloat("Speed", Mathf.MoveTowards(agentSpeedAnim,agentCurrentSpeed, Time.deltaTime * animateTransitionSpeed));
     }
     void faceTarget()
     {

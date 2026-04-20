@@ -1,22 +1,2 @@
 fileFormatVersion: 2
 guid: 5a71c3463bb7cdc489126828962ceda8
-MonoImporter:
-  externalObjects: {}
-  serializedVersion: 2
-  defaultReferences:
-  - menuActive: {instanceID: 0}
-  - menuPause: {instanceID: 0}
-  - menuWin: {instanceID: 0}
-  - menuLose: {instanceID: 0}
-  - gameGoalCountText: {instanceID: 0}
-  - playerHPBar: {instanceID: 0}
-  - PlayerDamageFlash: {instanceID: 0}
-  - player: {fileID: 2483106547499671628, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
-  - playerScript: {instanceID: 0}
-  - playerSpawnPos: {instanceID: 0}
-  - checkPointPopup: {instanceID: 0}
-  executionOrder: 0
-  icon: {instanceID: 0}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 

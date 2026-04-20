@@ -50,7 +50,7 @@ public class Damage : MonoBehaviour
             {
                 Instantiate(hitEffect, transform.position, Quaternion.identity);
             }
-            Destroy(gameObject);
+            Destroy(gameObject,destroyTime);
         }
     }
     private void OnTriggerStay(Collider other)
