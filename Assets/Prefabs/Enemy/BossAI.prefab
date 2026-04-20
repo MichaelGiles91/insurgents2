@@ -132,10 +132,13 @@ MonoBehaviour:
   agent: {fileID: 429684118462420108}
   fireBall: {fileID: 6411377967987673738, guid: 81868a39dc95e2347bae0772ef122d21, type: 3}
   shootPos: {fileID: 4782911477057866833}
-  bossHP: 10
+  model: {fileID: 0}
+  bossHP: 200
   bossSpeed: 5
   shootRate: 1
-  target: {fileID: 0}
+  jumpRate: 0
+  jumpForce: 0
+  target: {fileID: 147023646130132008, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
   minumumDistance: 0
 --- !u!195 &429684118462420108
 NavMeshAgent:
