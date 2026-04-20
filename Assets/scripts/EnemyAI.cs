@@ -16,7 +16,7 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     float attackTimer;
     Transform player;
-
+    float distance;
     Color colorOrig;
     Vector3 playerDirection;
 
@@ -39,7 +39,7 @@ public class EnemyAI : MonoBehaviour, IDamage
 
         agent.SetDestination(gameManager.instance.player.transform.position);
 
-        float distance = Vector3.Distance(transform.position, player.position);
+         distance = Vector3.Distance(transform.position, player.position);
 
 
         if (agent.remainingDistance <= agent.stoppingDistance)
