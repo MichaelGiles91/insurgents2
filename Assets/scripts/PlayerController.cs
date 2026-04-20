@@ -57,15 +57,6 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     // Update is called once per frame
     void Update()
     {
-<<<<<<< Updated upstream
-=======
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Debug.Log("CLICK DETECTED");
-        }
-
-        shootTimer += Time.deltaTime;
->>>>>>> Stashed changes
         movement();
         sprint();
         updatePlayerUI();
@@ -82,11 +73,8 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
 
     void movement()
     {
-<<<<<<< Updated upstream
         shootTimer += Time.deltaTime;
         batTimer += Time.deltaTime;
-=======
->>>>>>> Stashed changes
 
         pushVel = Vector3.Lerp(pushVel, Vector3.zero, pushVelTime * Time.deltaTime);
 
@@ -104,11 +92,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
 
         playerVel.y -= gravity * Time.deltaTime;
 
-<<<<<<< Updated upstream
         if (Input.GetButtonDown("Fire1"))
-=======
-        if (Input.GetButtonDown("Fire1") && gunList.Count > 0 && shootTimer >= shootRate)
->>>>>>> Stashed changes
         {
             if (hasBat && batTimer >= swingRate && !isSwinging)
             {
@@ -150,43 +134,6 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         gunList[gunListPos].ammoCur--;
         aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootSoundVol);
 
-<<<<<<< Updated upstream
-=======
-        GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
-
-        Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        rb.linearVelocity = Camera.main.transform.forward * bulletForce;
-
-        gunStats currentGunStats = gunList[gunListPos];
-
-        if (currentGunStats.ammoCur <= 0)
-        {
-            Debug.Log("OUT OF AMMO");
-            return;
-        }
-
-        currentGunStats.ammoCur--;
-
-        updateAmmoUI();
-
-        //currentGun.ammoCur--;
-        Debug.Log("SHOOTING");
-
-        Debug.Log("Ammo BEFORE: " + currentGunStats.ammoCur);
-        currentGunStats.ammoCur--;
-        Debug.Log("Ammo AFTER: " + currentGunStats.ammoCur);
-    }
-
-    void SwingBat()
-    {
-        Debug.Log("BAT SWING");
-
-        if (!isSwinging)
-        {
-            StartCoroutine(BatSwingAnim());
-        }
-
->>>>>>> Stashed changes
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
         {
@@ -338,41 +285,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
                     }
                 }
             }
-<<<<<<< Updated upstream
 
-=======
-        }
-    }
-    void updateAmmoUI()
-    {
-        if (gunList.Count == 0 || gunListPos >= gunList.Count)
-        {
-            ammoText.text = "-- / --";
-            return;
-        }
-
-        gunStats gun = gunList[gunListPos];
-
-        ammoText.text = $"{gun.ammoCur} / {gun.ammoReserve}";
-    }
-
-
-
-    IEnumerator ReloadRoutine()
-    {
-        isReloading = true;
-
-        Vector3 startPos = gun_Model.localPosition;
-        Vector3 downPos = startPos + new Vector3(0, -1.5f, 0); // deeper drop
-
-        float t = 0;
-
-        // 🔻 MOVE DOWN (faster)
-        while (t < 1)
-        {
-            t += Time.deltaTime * 3f;
-            gun_Model.localPosition = Vector3.Lerp(startPos, downPos, t);
->>>>>>> Stashed changes
             yield return null;
         }
 
@@ -381,37 +294,9 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         // return to idle
         while (t < 1f)
         {
-<<<<<<< Updated upstream
             t += Time.deltaTime * 16f;
             batModel.transform.localPosition = Vector3.Lerp(hitPos, startPos, t);
             batModel.transform.localRotation = Quaternion.Lerp(hitRot, startRot, t);
-=======
-            aud.PlayOneShot(reloadSound);
-        }
-
-        // ⏱ WAIT (main reload time)
-        yield return new WaitForSeconds(reloadTime * 0.8f);
-
-        // 🔄 REFILL AMMO
-        gunStats currentGun = gunList[gunListPos];
-
-        int neededAmmo = currentGun.ammoMax - currentGun.ammoCur;
-
-        int ammoToLoad = Mathf.Min(neededAmmo, currentGun.ammoReserve);
-
-        currentGun.ammoCur += ammoToLoad;
-        currentGun.ammoReserve -= ammoToLoad;
-
-        updateAmmoUI();
-
-        t = 0;
-
-        // 🔺 MOVE BACK UP (slower for weight)
-        while (t < 1)
-        {
-            t += Time.deltaTime * 1.5f;
-            gun_Model.localPosition = Vector3.Lerp(downPos, startPos, t);
->>>>>>> Stashed changes
             yield return null;
         }
 
