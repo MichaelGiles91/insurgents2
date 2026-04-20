@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5647700884096718631}
   - component: {fileID: -6442607901820647352}
   - component: {fileID: 2333787017416739521}
-  - component: {fileID: 5640852747488374221}
+  - component: {fileID: 7839804226580319970}
   m_Layer: 0
   m_Name: Bullet_Pistol_A
   m_TagString: Untagged
@@ -136,13 +136,13 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.011574433, y: 0.013365004, z: 0.024999999}
   m_Center: {x: 0, y: -9.313226e-10, z: -0.0090000015}
---- !u!114 &5640852747488374221
+--- !u!114 &7839804226580319970
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,10 +151,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 6152012165266093810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4334c6348818709409ac44cc60ffd24a, type: 3}
+  m_Script: {fileID: 11500000, guid: fd9c8960361e6cb4a9757a13270a2eaf, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Bullet
-  lifeTime: 2
+  m_EditorClassIdentifier: Assembly-CSharp::Damage
+  type: 0
+  rb: {fileID: -6442607901820647352}
+  damageAmount: 200
+  damageRate: 200
+  speed: 67
+  destroyTime: 3
+  hitEffect: {fileID: 0}
 --- !u!1 &8849644791493623283
 GameObject:
   m_ObjectHideFlags: 0

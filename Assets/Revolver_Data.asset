@@ -9,18 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7f0fc579e15531498e4096f96c3b049, type: 3}
-  m_Name: Revolver_1
+  m_Script: {fileID: 11500000, guid: 822e714f30cff1e47bdb7c8b6131ca5c, type: 3}
+  m_Name: Revolver_Data
   m_EditorClassIdentifier: Assembly-CSharp::gunStats
-  isPowerWeapon: 0
-  powerDuration: 10
-  powerMusic: {fileID: 0}
-  gunModel: {fileID: 0}
-  shootDamage: 1
+  gunModel: {fileID: 6971496768782505918, guid: dfc4d87131163204eb41e8626f81e196, type: 3}
+  shootDamage: 10
   shootDist: 15
   shootRate: 0.1
-  ammoCur: 0
-  ammoMax: 5
+  ammoCur: 9
+  ammoMax: 9
   hitEffect: {fileID: 0}
   shootSound: []
   shootSoundVol: 0
