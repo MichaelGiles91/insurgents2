@@ -1,11 +1,12 @@
 ﻿using JetBrains.Annotations;
-using Unity.VisualScripting;
-using UnityEngine.Rendering;
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.InputSystem;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 
 public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
@@ -35,7 +36,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     [SerializeField] float recoilSpeed = 10f;
 
     [SerializeField] GameObject gunModel;
-    [SerializeField] Camera shootCam;
+   
 
     [SerializeField] AudioSource aud;
     [SerializeField] float reloadTime = 1.5f;
@@ -166,6 +167,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     }
     void shoot()
     {
+        
         //if (isReloading) return;
         if (gunList.Count == 0) return;
         if (gunListPos >= gunList.Count) return;
@@ -182,12 +184,15 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         gunList[gunListPos].ammoCur--;
         aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootSoundVol);
 
-        Ray ray = shootCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        Debug.Log($"[SHOOT] Camera world pos: {Camera.main.transform.position}"); Debug.Log($"[SHOOT] Camera euler angles: {Camera.main.transform.eulerAngles}");
+        Debug.Log($"[SHOOT] Ray origin: {ray.origin}  direction: {ray.direction}"); Debug.DrawRay(ray.origin, ray.direction * shootDist, Color.red, 3f);
         RaycastHit hit;
+       
         if (Physics.Raycast(ray, out hit, shootDist, ~ignoreLayer))
         {
-            Debug.Log(hit.collider.name);
+            Debug.Log($"[SHOOT] HIT: {hit.collider.name} | layer: {hit.collider.gameObject.layer} | world point:{ hit.point} | distance: { hit.distance}");
+            
 
             if (gunList[gunListPos].hitEffect != null)
                 Instantiate(gunList[gunListPos].hitEffect, hit.point, Quaternion.identity);
@@ -196,6 +201,10 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
             if (dmg != null)
             {
                 dmg.takeDamage(shootDamage);
+            }
+            else
+            {
+                Debug.Log("[SHOOT] no hit");
             }
         }
 
@@ -377,7 +386,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
             Destroy(child.gameObject);
         }
 
-        currentGun = Instantiate(gunList[gunListPos].gunModel, gunModel.transform);
+        currentGun = Instantiate(gunList[gunListPos].gunModel, gun_Model.transform);
 
 
         currentGun.transform.localPosition = Vector3.zero;
@@ -393,6 +402,9 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         shootDamage = gunList[gunListPos].shootDamage;
         shootDist = gunList[gunListPos].shootDist;
         shootRate = gunList[gunListPos].shootRate;
+
+        gunStartPos = gun_Model.localPosition;
+        gunStartRot = gun_Model.localRotation;
         updateAmmoUI();
     }
 
