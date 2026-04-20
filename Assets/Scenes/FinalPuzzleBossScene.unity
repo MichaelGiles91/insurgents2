@@ -1134,6 +1134,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7290785292104384730, guid: d1340db50eb3a584a9e4269c1ef95f77, type: 3}
   m_PrefabInstance: {fileID: 1678544389}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1085575216 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6697808384625160769, guid: 88e466bf33c88b84592cb146ed3a1b9e, type: 3}
+  m_PrefabInstance: {fileID: 1554213623}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1149710959 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2671737886433377966, guid: 3c9a6428c54b1474183b6f1c48947291, type: 3}
@@ -1197,7 +1202,7 @@ MonoBehaviour:
   speed: 0
   destroyTime: 0
   hitEffect: {fileID: 0}
---- !u!1001 &1444292803
+--- !u!1001 &1554213623
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1205,55 +1210,75 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6342865153207901006, guid: 1928cd6bd2ec8b6498608f005a62a9b6, type: 3}
+    - target: {fileID: 2006645685001597413, guid: 88e466bf33c88b84592cb146ed3a1b9e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.27
+      value: -13.64
       objectReference: {fileID: 0}
-    - target: {fileID: 6342865153207901006, guid: 1928cd6bd2ec8b6498608f005a62a9b6, type: 3}
+    - target: {fileID: 2006645685001597413, guid: 88e466bf33c88b84592cb146ed3a1b9e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.28
+      value: 12.62
       objectReference: {fileID: 0}
-    - target: {fileID: 6342865153207901006, guid: 1928cd6bd2ec8b6498608f005a62a9b6, type: 3}
+    - target: {fileID: 2006645685001597413, guid: 88e466bf33c88b84592cb146ed3a1b9e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.56
+      value: 7.8
       objectReference: {fileID: 0}
-    - target: {fileID: 6342865153207901006, guid: 1928cd6bd2ec8b6498608f005a62a9b6, type: 3}
+    - target: {fileID: 2006645685001597413, guid: 88e466bf33c88b84592cb146ed3a1b9e, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6342865153207901006, guid: 1928cd6bd2ec8b6498608f005a62a9b6, type: 3}
+    - target: {fileID: 2006645685001597413, guid: 88e466bf33c88b84592cb146ed3a1b9e, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 6342865153207901006, guid: 1928cd6bd2ec8b6498608f005a62a9b6, type: 3}
+    - target: {fileID: 2006645685001597413, guid: 88e466bf33c88b84592cb146ed3a1b9e, type: 3}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 6342865153207901006, guid: 1928cd6bd2ec8b6498608f005a62a9b6, type: 3}
+    - target: {fileID: 2006645685001597413, guid: 88e466bf33c88b84592cb146ed3a1b9e, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 6342865153207901006, guid: 1928cd6bd2ec8b6498608f005a62a9b6, type: 3}
+    - target: {fileID: 2006645685001597413, guid: 88e466bf33c88b84592cb146ed3a1b9e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6342865153207901006, guid: 1928cd6bd2ec8b6498608f005a62a9b6, type: 3}
+    - target: {fileID: 2006645685001597413, guid: 88e466bf33c88b84592cb146ed3a1b9e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6342865153207901006, guid: 1928cd6bd2ec8b6498608f005a62a9b6, type: 3}
+    - target: {fileID: 2006645685001597413, guid: 88e466bf33c88b84592cb146ed3a1b9e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6361224542141772755, guid: 1928cd6bd2ec8b6498608f005a62a9b6, type: 3}
+    - target: {fileID: 4755296836055510885, guid: 88e466bf33c88b84592cb146ed3a1b9e, type: 3}
       propertyPath: m_Name
-      value: Zombie
+      value: Zombie 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7072638867149506480, guid: 88e466bf33c88b84592cb146ed3a1b9e, type: 3}
+      propertyPath: animate
+      value: 
+      objectReference: {fileID: 1085575216}
+    - target: {fileID: 7072638867149506480, guid: 88e466bf33c88b84592cb146ed3a1b9e, type: 3}
+      propertyPath: attackRange
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7072638867149506480, guid: 88e466bf33c88b84592cb146ed3a1b9e, type: 3}
+      propertyPath: meleeDamage
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7072638867149506480, guid: 88e466bf33c88b84592cb146ed3a1b9e, type: 3}
+      propertyPath: faceTargetSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7072638867149506480, guid: 88e466bf33c88b84592cb146ed3a1b9e, type: 3}
+      propertyPath: animateTransitionSpeed
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1928cd6bd2ec8b6498608f005a62a9b6, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 88e466bf33c88b84592cb146ed3a1b9e, type: 3}
 --- !u!1 &1561340409 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1807005234219949531, guid: d1340db50eb3a584a9e4269c1ef95f77, type: 3}
@@ -1552,24 +1577,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1850779029}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c80e486f3b717542a5fddf7bc3f5d3d, type: 3}
+  m_Script: {fileID: 11500000, guid: 625e1d3a58d7c1445a60c452fd4ac780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   controller: {fileID: 1850779031}
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 0
-  HP: 99
-  Speed: 5
+  HP: 10
+  Speed: 2
   SprintMod: 2
-  JumpSpeed: 3
-  JumpMax: 1
+  JumpSpeed: 2
+  JumpMax: 2
   gravity: 9
-  pushVelTime: 0
+  pushVelTime: 2
   gunList: []
-  shootDamage: 0
-  shootDist: 0
-  shootRate: 0
+  shootDamage: 2
+  shootDist: 2
+  shootRate: 2
+  batDmg: 2
+  batRange: 2
+  swingRate: 0.6
+  batModel: {fileID: 0}
   gunModel: {fileID: 0}
   aud: {fileID: 0}
 --- !u!4 &1850779036 stripped
@@ -2104,4 +2133,4 @@ SceneRoots:
   - {fileID: 694980035}
   - {fileID: 706998365}
   - {fileID: 2038991734}
-  - {fileID: 1444292803}
+  - {fileID: 1554213623}
