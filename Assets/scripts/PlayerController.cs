@@ -98,7 +98,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
                 Time.deltaTime * recoilSpeed);
         }
 
-        
+
 
         gunModel.transform.localPosition = Vector3.Lerp(
      gunModel.transform.localPosition,
@@ -157,7 +157,8 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         if (Input.GetButtonDown("sprint"))
         {
             Speed *= SprintMod;
-        }else if (Input.GetButtonUp("sprint"))
+        }
+        else if (Input.GetButtonUp("sprint"))
         {
             Speed /= SprintMod;
         }
@@ -227,77 +228,77 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     }
 
     IEnumerator BatSwingAnim()
-{
-    isSwinging = true;
+    {
+        isSwinging = true;
 
-    float t = 0;
+        float t = 0;
 
-    Vector3 startPos = gunStartPos;
-    Quaternion startRot = gunStartRot;
+        Vector3 startPos = gunStartPos;
+        Quaternion startRot = gunStartRot;
 
-        
+
         Quaternion readyRot = Quaternion.Euler(60f, 100f, 20f);
 
         gun_Model.localRotation = readyRot;
-    gun_Model.localPosition = startPos + new Vector3(0.7f, -0.4f, 0.2f);
+        gun_Model.localPosition = startPos + new Vector3(0.7f, -0.4f, 0.2f);
 
-        yield return new WaitForSeconds(0.05f); 
+        yield return new WaitForSeconds(0.05f);
 
-   
+
         Quaternion hitRot = Quaternion.Euler(0f, -160f, -30f);
 
 
         bool didHitPause = false;
 
-    while (t < 1)
-    {
-        t += Time.deltaTime * 4f;
-
-        gun_Model.localRotation = Quaternion.Lerp(readyRot, hitRot, t);
-
-        gun_Model.localPosition = Vector3.Lerp(
-            startPos + new Vector3(0.2f, -0.2f, 0.1f),
-            startPos + new Vector3(-1.2f, -0.2f, 0.3f),
-            t
-        );
-
-      
-        if (!didHitPause && t > 0.5f)
+        while (t < 1)
         {
-            didHitPause = true;
-            yield return new WaitForSeconds(0.05f);
+            t += Time.deltaTime * 4f;
+
+            gun_Model.localRotation = Quaternion.Lerp(readyRot, hitRot, t);
+
+            gun_Model.localPosition = Vector3.Lerp(
+                startPos + new Vector3(0.2f, -0.2f, 0.1f),
+                startPos + new Vector3(-1.2f, -0.2f, 0.3f),
+                t
+            );
+
+
+            if (!didHitPause && t > 0.5f)
+            {
+                didHitPause = true;
+                yield return new WaitForSeconds(0.05f);
+            }
+
+            yield return null;
         }
 
-        yield return null;
+
+        float resetT = 0;
+
+        while (resetT < 1)
+        {
+            resetT += Time.deltaTime * 6f;
+
+            gun_Model.localPosition = Vector3.Lerp(
+                gun_Model.localPosition,
+                startPos,
+                resetT
+            );
+
+            gun_Model.localRotation = Quaternion.Lerp(
+                gun_Model.localRotation,
+                startRot,
+                resetT
+            );
+
+            yield return null;
+        }
+
+        gun_Model.localPosition = startPos;
+        gun_Model.localRotation = startRot;
+
+        isSwinging = false;
     }
-
-    
-    float resetT = 0;
-
-    while (resetT < 1)
-    {
-        resetT += Time.deltaTime * 6f;
-
-        gun_Model.localPosition = Vector3.Lerp(
-            gun_Model.localPosition,
-            startPos,
-            resetT
-        );
-
-        gun_Model.localRotation = Quaternion.Lerp(
-            gun_Model.localRotation,
-            startRot,
-            resetT
-        );
-
-        yield return null;
-    }
-
-    gun_Model.localPosition = startPos;
-    gun_Model.localRotation = startRot;
-
-    isSwinging = false;
-}
     public void takeDamage(int amount)
     {
         if (isInvincible) return;
@@ -305,20 +306,20 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         updatePlayerUI();
         StartCoroutine(flashScreen());
 
-        if(HP <= 0)
+        if (HP <= 0)
         {
             gameManager.instance.youLose();
         }
     }
     public void healDamage(int healAmount)
     {
-         HP += healAmount;
+        HP += healAmount;
 
-        if(HP > HPOrig )
+        if (HP > HPOrig)
         {
             HP = HPOrig;
         }
-       
+
 
         updatePlayerUI();
     }
@@ -345,7 +346,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         shootDist = gun.shootDist;
         shootRate = gun.shootRate;
 
-        
+
 
         gunModel.SetActive(true);
 
@@ -366,7 +367,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         }
 
         currentGun = Instantiate(gunList[gunListPos].gunModel, gunModel.transform);
-      
+
 
         currentGun.transform.localPosition = Vector3.zero;
         currentGun.transform.localRotation = Quaternion.identity;
@@ -386,12 +387,12 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
 
     void selectGun()
     {
-        if(Input.GetAxis("Mouse ScrollWheel") > 0 && gunListPos < gunList.Count -1)
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && gunListPos < gunList.Count -1)
         {
             gunListPos++;
             changeGun();
         }
-        else if(Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
         {
             gunListPos--;
             changeGun();
@@ -451,7 +452,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
             aud.PlayOneShot(reloadSound);
         }
 
-  
+
         yield return new WaitForSeconds(reloadTime * 0.8f);
 
 
