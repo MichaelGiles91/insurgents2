@@ -29,7 +29,7 @@ public class BossAI : MonoBehaviour, IDamage
     void Start()
     {
         bossColor = model.material.color;
-        rb.GetComponent<Rigidbody>();
+        //rb.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -45,10 +45,10 @@ public class BossAI : MonoBehaviour, IDamage
            shoot();
             
         }
-        if(jumpTimer >= jumpRate)
-        {
-           bossJump();
-        }
+       // if(jumpTimer >= jumpRate)
+       // {
+          // bossJump();
+        //}
     
 
     }
@@ -59,7 +59,7 @@ public class BossAI : MonoBehaviour, IDamage
         Instantiate(fireBall, shootPos.position, transform.rotation);
     }
 
- void bossJump()
+/* void bossJump()
     {
         
         jumpTimer = 0;
@@ -67,7 +67,7 @@ public class BossAI : MonoBehaviour, IDamage
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
     }
-
+*/
     public void takeDamage(int amount)
     {
         bossHP -=amount;

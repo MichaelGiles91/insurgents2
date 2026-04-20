@@ -16,6 +16,7 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     float attackTimer;
     Transform player;
+    float distance;
 
     Color colorOrig;
     Vector3 playerDirection;
@@ -39,7 +40,7 @@ public class EnemyAI : MonoBehaviour, IDamage
 
         agent.SetDestination(gameManager.instance.player.transform.position);
 
-        float distance = Vector3.Distance(transform.position, player.position);
+        distance = Vector3.Distance(transform.position, player.position);
 
 
         if (agent.remainingDistance <= agent.stoppingDistance)
@@ -55,9 +56,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     void locomotionAnim()
     {
         float agentCurrentSpeed = agent.velocity.normalized.magnitude;
-        float agentSpeedAnim = animate.GetFloat("Speed");
+       // float agentSpeedAnim = animate.GetFloat("Speed");
 
-        animate.SetFloat("Speed", Mathf.MoveTowards(agentSpeedAnim,agentCurrentSpeed, Time.deltaTime * animateTransitionSpeed));
+        //animate.SetFloat("Speed", Mathf.MoveTowards(agentSpeedAnim,agentCurrentSpeed, Time.deltaTime * animateTransitionSpeed));
     }
     void faceTarget()
     {
