@@ -10,8 +10,10 @@ public class gunStats : ScriptableObject
     [Range(15, 1000)] public int shootDist;
     [Range(0.1f, 2f)] public float shootRate;
 
+    [Header("Ammo")]
     public int ammoCur;
-    [Range(5, 50)] public int ammoMax;
+    public int ammoMax;
+    public int ammoReserve;
 
     public ParticleSystem hitEffect;
     public AudioClip[] shootSound;
