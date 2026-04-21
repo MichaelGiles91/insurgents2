@@ -299,7 +299,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2913256777252581994}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.07942296, y: 0.15700448, z: -0.7167739, w: -0.67474186}
+  m_LocalRotation: {x: -0.0794228, y: -0.15700968, z: 0.71677417, w: 0.67474055}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
@@ -313,7 +313,7 @@ Transform:
   - {fileID: 3429450936306238294}
   - {fileID: 1070733958385476624}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 6.771, y: -19.149, z: 92.317}
 --- !u!23 &3497039661383630739
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -431,7 +431,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fcd165082e592549890842de9cbba9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GunPickup
-  gun: {fileID: 11400000, guid: 9f10fa5f68ab2104297269134ffe5de2, type: 2}
+  gun: {fileID: 11400000, guid: 5160fd40cac883248a836f8e450a03a7, type: 2}
+  pickupText: {fileID: 0}
 --- !u!1 &3373320495011607050
 GameObject:
   m_ObjectHideFlags: 0

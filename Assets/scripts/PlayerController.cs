@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
+
 
 
 public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
@@ -167,7 +167,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     }
     void shoot()
     {
-        
+
         //if (isReloading) return;
         if (gunList.Count == 0) return;
         if (gunListPos >= gunList.Count) return;
@@ -185,13 +185,11 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootSoundVol);
 
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-        Debug.Log($"[SHOOT] Camera world pos: {Camera.main.transform.position}"); Debug.Log($"[SHOOT] Camera euler angles: {Camera.main.transform.eulerAngles}");
-        Debug.Log($"[SHOOT] Ray origin: {ray.origin}  direction: {ray.direction}"); Debug.DrawRay(ray.origin, ray.direction * shootDist, Color.red, 3f);
+
         RaycastHit hit;
-       
+
         if (Physics.Raycast(ray, out hit, shootDist, ~ignoreLayer))
-        {
-            Debug.Log($"[SHOOT] HIT: {hit.collider.name} | layer: {hit.collider.gameObject.layer} | world point:{ hit.point} | distance: { hit.distance}");
+        { 
             
 
             if (gunList[gunListPos].hitEffect != null)

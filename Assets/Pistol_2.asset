@@ -16,11 +16,11 @@ MonoBehaviour:
   powerDuration: 10
   powerMusic: {fileID: 0}
   gunModel: {fileID: 7919549562936002274, guid: 046f7db7ce5dd7147a9a5c3d5e5ae047, type: 3}
-  shootDamage: 1
+  shootDamage: 5
   shootDist: 500
   shootRate: 0.1
-  ammoCur: 28
-  ammoMax: 5
+  ammoCur: 9
+  ammoMax: 32
   hitEffect: {fileID: 1301697207402410478, guid: 39f852c28f9c3fd45a427c24f3564ba7, type: 3}
   shootSound:
   - {fileID: 8300000, guid: 04d465d2b9a52f14390024e73d3c10bf, type: 3}

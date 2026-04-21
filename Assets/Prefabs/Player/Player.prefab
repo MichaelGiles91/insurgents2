@@ -124,6 +124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1624374140494713037}
   - component: {fileID: 6392218741649358721}
+  - component: {fileID: 8931718035174903578}
   - component: {fileID: 4552251304040215969}
   - component: {fileID: 4947326955594036740}
   m_Layer: 0
@@ -201,6 +202,22 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &8931718035174903578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584413784639640720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034e27d8841543845aeb309982934d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::cameraController
+  sens: 180
+  lockVertMin: -90
+  lockVertMax: 90
+  invertY: 0
 --- !u!81 &4552251304040215969
 AudioListener:
   m_ObjectHideFlags: 0
@@ -281,10 +298,11 @@ Transform:
   m_GameObject: {fileID: 2367679000309641823}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.356, y: -0.47, z: 0.612}
+  m_LocalPosition: {x: 0.356, y: -0.31, z: 0.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4633093388333154031}
   m_Father: {fileID: 1624374140494713037}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5736354446642042140
@@ -445,9 +463,9 @@ AudioSource:
   m_GameObject: {fileID: 2483106547499671628}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3016241658534966078, guid: d51e7ec589c687949b1f832913577603, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 20b9922ccd56e074bae1e0c4664452f2, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -548,7 +566,7 @@ MonoBehaviour:
   controller: {fileID: 6642819762404013951}
   ignoreLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   HP: 100
   Speed: 5
   SprintMod: 2
@@ -561,21 +579,52 @@ MonoBehaviour:
   shootDist: 100
   shootRate: 1
   startingGun: {fileID: 0}
-  bulletPrefab: {fileID: 2913256777252581994, guid: dbee9677d5947b444b3e8012614ba4fe, type: 3}
-  shootPoint: {fileID: 0}
+  bulletPrefab: {fileID: 6152012165266093810, guid: ec0581e8aa214204b9f01884e77f846c, type: 3}
+  shootPoint: {fileID: 4633093388333154031}
   bulletForce: 20
   ammoText: {fileID: 0}
   recoilAmount: 0.1
   recoilSpeed: 10
-  gunModel: {fileID: 2913256777252581994, guid: dbee9677d5947b444b3e8012614ba4fe, type: 3}
-  aud: {fileID: 0}
+  gunModel: {fileID: 2367679000309641823}
+  aud: {fileID: 527548449868183750}
   reloadTime: 1.5
   reloadSound: {fileID: 0}
   isPowerWeapon: 0
   powerDuration: 10
   powerMusic: {fileID: 0}
   swingCooldown: 0.5
-  gun_Model: {fileID: 0}
+  gun_Model: {fileID: 939904025355196820}
+--- !u!1 &6613389124737652091
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4633093388333154031}
+  m_Layer: 9
+  m_Name: shoot pos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4633093388333154031
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6613389124737652091}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.348}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 939904025355196820}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8134072393354264715
 GameObject:
   m_ObjectHideFlags: 0
