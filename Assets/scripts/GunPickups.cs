@@ -13,8 +13,6 @@ public class GunPickup : MonoBehaviour, IPickup
       
         pickupText.SetActive(false);
 
-        ObjectiveManager.instance.CompleteObjective();
-
         Destroy(transform.root.gameObject);
     }
     private void OnTriggerEnter(Collider other)

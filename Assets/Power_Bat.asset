@@ -15,8 +15,8 @@ MonoBehaviour:
   isPowerWeapon: 1
   powerDuration: 15
   powerMusic: {fileID: 8300000, guid: 0d9e9009a553e324293990fc383c8e60, type: 3}
-  gunModel: {fileID: 0}
-  shootDamage: 1
+  gunModel: {fileID: 796996835362358867, guid: 7f034c939866ea2439d6d102cccb0a2b, type: 3}
+  shootDamage: 10
   shootDist: 15
   shootRate: 0.1
   ammoCur: 0
