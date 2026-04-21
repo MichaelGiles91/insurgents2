@@ -15,13 +15,13 @@ MonoBehaviour:
   isPowerWeapon: 0
   powerDuration: 10
   powerMusic: {fileID: 0}
-  gunModel: {fileID: 2913256777252581994, guid: b5699e98277bfd246ae755544484e840, type: 3}
+  gunModel: {fileID: 1329832633457327214, guid: 35d468de1311aac4c8228916ac5bb4a8, type: 3}
   shootDamage: 10
-  shootDist: 15
+  shootDist: 500
   shootRate: 0.1
-  ammoCur: 49
+  ammoCur: 17
   ammoMax: 50
   hitEffect: {fileID: 1301697207402410478, guid: 39f852c28f9c3fd45a427c24f3564ba7, type: 3}
   shootSound:
-  - {fileID: 0}
-  shootSoundVol: 0
+  - {fileID: 8300000, guid: 04d465d2b9a52f14390024e73d3c10bf, type: 3}
+  shootSoundVol: 0.36
