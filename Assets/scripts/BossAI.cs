@@ -73,7 +73,9 @@ public class BossAI : MonoBehaviour, IDamage
         bossHP -=amount;
         if(bossHP <= 0)
         {
+            
             Destroy(gameObject);
+            gameManager.instance.updateGameGoal();
         }
         else
         {
