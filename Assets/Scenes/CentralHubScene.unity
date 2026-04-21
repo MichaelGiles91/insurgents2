@@ -3841,7 +3841,8 @@ PrefabInstance:
       propertyPath: closedText
       value: 
       objectReference: {fileID: 1153917258}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1451719318690014962, guid: b5a5a17dc3a6d9e47bd468828a2dec34, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -5372,8 +5373,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f72712d268d5ccf48ad2f313255e6ce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::objectiveMarker
-  target: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
 --- !u!1 &1310486053
 GameObject:
   m_ObjectHideFlags: 0
@@ -7776,7 +7775,8 @@ PrefabInstance:
       propertyPath: interactText
       value: 
       objectReference: {fileID: 1153917256}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8597593891033023016, guid: b5a5a17dc3a6d9e47bd468828a2dec34, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
