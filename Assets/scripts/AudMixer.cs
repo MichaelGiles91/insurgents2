@@ -10,31 +10,33 @@ public class AudMixer : MonoBehaviour
     
     void Start()
     {
+
+       
         float music = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
         float SFX = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
+
+
+
+        musicSlider.value = music;
+        SFXSlider.value = SFX;
 
         SetMusicVolume(music);
         SetSFXVolume(SFX);
 
-      //  musicSlider.value = music;
-        SFXSlider.value = SFX;
     }
 
     // Update is called once per frame
-  public void SetMusicVolume(float value)
+    public void SetMusicVolume(float value)
     {
         value = Mathf.Clamp(value, 0.0001f, 1f);
-        float volume = Mathf.Log10(value) * 20;
-        mixer.SetFloat("MusicVolume", volume);
-        PlayerPrefs.SetFloat("MusicVolume" , value);
-
+        mixer.SetFloat("MusicVolume", Mathf.Log10(value) * 20);
+        PlayerPrefs.SetFloat("MusicVolume", value);
     }
+
     public void SetSFXVolume(float value)
     {
         value = Mathf.Clamp(value, 0.0001f, 1f);
-        float volume = Mathf.Log10(value) * 20;
-        mixer.SetFloat("SFXVolume", volume);
+        mixer.SetFloat("SFXVolume", Mathf.Log10(value) * 20);
         PlayerPrefs.SetFloat("SFXVolume", value);
-
     }
 }

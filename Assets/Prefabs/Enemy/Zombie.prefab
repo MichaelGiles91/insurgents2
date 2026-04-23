@@ -4360,10 +4360,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6342865153207901006}
-  - component: {fileID: 6911344906479247958}
   - component: {fileID: 126111720830136205}
   - component: {fileID: 5331975909472917041}
   - component: {fileID: 7875619547665529253}
+  - component: {fileID: 699600156230880808}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Untagged
@@ -4380,7 +4380,7 @@ Transform:
   m_GameObject: {fileID: 6361224542141772755}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.62163, y: 12.70418, z: -3.32209}
+  m_LocalPosition: {x: 5.05, y: 2.8, z: 27.8}
   m_LocalScale: {x: 3, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4389,27 +4389,6 @@ Transform:
   - {fileID: 5714016056370972948}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6911344906479247958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6361224542141772755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 995f29d662ae7f44583cb800e0bca96e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  agent: {fileID: 126111720830136205}
-  model: {fileID: 5673263050487603552}
-  HP: 10
-  faceTargetSpeed: 1
-  meleeDamage: 2
-  attackRate: 1
-  attackRange: 3
-  animate: {fileID: 7875619547665529253}
-  animateTransitionSpeed: 12
 --- !u!195 &126111720830136205
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4475,6 +4454,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &699600156230880808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6361224542141772755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c8551a7eb6c737458114386061855c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
+  agent: {fileID: 126111720830136205}
+  model: {fileID: 5673263050487603552}
+  HP: 10
+  faceTargetSpeed: 1
+  meleeDamage: 2
+  attackRate: 1
+  attackRange: 3
+  animate: {fileID: 7875619547665529253}
+  animateTransitionSpeed: 1
 --- !u!1 &6412153960736763935
 GameObject:
   m_ObjectHideFlags: 0

@@ -32,6 +32,11 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
+
+        if(agent == null)
+        {
+            return;
+        }
         locomotionAnim();
 
         attackTimer += Time.deltaTime;

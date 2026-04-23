@@ -50,10 +50,12 @@ public class spawn : MonoBehaviour
 
         ranPos += transform.position;
         NavMeshHit hit;
-      
 
-        NavMesh.SamplePosition(ranPos, out hit, spawnDist, 1);
 
-        Instantiate(objectToSpawn, hit.position, Quaternion.Euler(0, Random.Range(0f, 300f), 0f));
+        if (NavMesh.SamplePosition(ranPos, out hit, spawnDist, 1))
+        {
+            spawnCount++;
+            Instantiate(objectToSpawn, hit.position, Quaternion.Euler(0, Random.Range(0f, 300f), 0f));
+        }
     }
 }
