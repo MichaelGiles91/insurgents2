@@ -13,6 +13,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] float attackRange = 2f;
     [SerializeField] Animator animate;
     [SerializeField] int animateTransitionSpeed;
+    [SerializeField] bool isDummy;
 
     float attackTimer;
     Transform player;
@@ -24,6 +25,14 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (isDummy)
+        {
+            if (agent != null)
+            {
+                agent.enabled = false;
+            }
+            return;
+        }
         colorOrig = model.material.color;
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -33,7 +42,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     void Update()
     {
 
-        if(agent == null)
+        if(isDummy)
         {
             return;
         }

@@ -208,7 +208,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
 
 
 
-        Debug.Log("SHOOTING");
+        
     }
 
     void SwingBat()

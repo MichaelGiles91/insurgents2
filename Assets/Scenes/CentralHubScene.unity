@@ -119,11 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &8364268 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5586570743506188956, guid: d1340db50eb3a584a9e4269c1ef95f77, type: 3}
-  m_PrefabInstance: {fileID: 1480726790}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &10900079
 GameObject:
   m_ObjectHideFlags: 0
@@ -5360,18 +5355,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 977296761265816241, guid: d1340db50eb3a584a9e4269c1ef95f77, type: 3}
   m_PrefabInstance: {fileID: 1480726790}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1304289745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8364268}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f72712d268d5ccf48ad2f313255e6ce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::objectiveMarker
 --- !u!1 &1310486053
 GameObject:
   m_ObjectHideFlags: 0
@@ -6588,9 +6571,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1045927053}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5586570743506188956, guid: d1340db50eb3a584a9e4269c1ef95f77, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1304289745}
     - targetCorrespondingSourceObject: {fileID: 3707265638817160994, guid: d1340db50eb3a584a9e4269c1ef95f77, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1667285595}
