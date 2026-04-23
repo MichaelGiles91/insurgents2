@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     Vector3 gunStartPos;
     GameObject currentGun;
     Quaternion gunStartRot;
+    private Vector3 platformVelocity;
     //Transform gunVisual;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -92,7 +93,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         updatePlayerUI();
         interact();
 
-        if (!isSwinging)
+        if (!isSwinging && !isReloading)
         {
             gunModel.transform.localPosition = Vector3.Lerp(
                 gunModel.transform.localPosition,
@@ -100,13 +101,14 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
                 Time.deltaTime * recoilSpeed);
         }
 
-
-
-        gunModel.transform.localPosition = Vector3.Lerp(
-     gunModel.transform.localPosition,
-     gunStartPos,
-     recoilSpeed * Time.deltaTime
- );
+        if (!isReloading)
+        {
+            gunModel.transform.localPosition = Vector3.Lerp(
+                gunModel.transform.localPosition,
+                gunStartPos,
+                recoilSpeed * Time.deltaTime
+            );
+        }
     }
 
     public void spawnPlayer()
@@ -130,7 +132,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
             playerVel = Vector3.zero;
         }
         moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
-        controller.Move(moveDir * Speed * Time.deltaTime);
+        controller.Move((moveDir * Speed + platformVelocity) * Time.deltaTime);
 
         Jump();
         controller.Move((playerVel + pushVel) * Time.deltaTime);
@@ -204,11 +206,8 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
             {
                 Debug.Log("[SHOOT] no hit");
             }
-        }
-
-
-
         
+        updateAmmoUI();
     }
 
     void SwingBat()
@@ -541,5 +540,23 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         aud.clip = originalMusic;
         aud.Play();
     }
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.CompareTag("MovingPlatform"))
+        {
+            platformVelocity = hit.gameObject.GetComponent<sideToSidePlatform>().GetVelocity();
+        }
+        else
+        {
+            platformVelocity = Vector3.zero;
+        }
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("MovingPlatform"))
+        {
+            transform.SetParent(null);
+        }
+    }
 }
