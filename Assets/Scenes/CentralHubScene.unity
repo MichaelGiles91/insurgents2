@@ -4970,6 +4970,10 @@ PrefabInstance:
       propertyPath: ammoText
       value: 
       objectReference: {fileID: 64014918}
+    - target: {fileID: -556980373527062883, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
+      propertyPath: reloadSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 65ee5a80cf8706b478ff781d79af2630, type: 3}
     - target: {fileID: 147023646130132008, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.26
@@ -5372,6 +5376,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f72712d268d5ccf48ad2f313255e6ce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::objectiveMarker
+  target: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
 --- !u!1 &1310486053
 GameObject:
   m_ObjectHideFlags: 0

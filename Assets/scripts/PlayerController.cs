@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         updatePlayerUI();
         interact();
 
-        if (!isSwinging)
+        if (!isSwinging && !isReloading)
         {
             gunModel.transform.localPosition = Vector3.Lerp(
                 gunModel.transform.localPosition,
@@ -101,13 +101,14 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
                 Time.deltaTime * recoilSpeed);
         }
 
-
-
-        gunModel.transform.localPosition = Vector3.Lerp(
-     gunModel.transform.localPosition,
-     gunStartPos,
-     recoilSpeed * Time.deltaTime
- );
+        if (!isReloading)
+        {
+            gunModel.transform.localPosition = Vector3.Lerp(
+                gunModel.transform.localPosition,
+                gunStartPos,
+                recoilSpeed * Time.deltaTime
+            );
+        }
     }
 
     public void spawnPlayer()
@@ -206,10 +207,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
                 Debug.Log("[SHOOT] no hit");
             }
         }
-
-
-
-        Debug.Log("SHOOTING");
+        updateAmmoUI();
     }
 
     void SwingBat()

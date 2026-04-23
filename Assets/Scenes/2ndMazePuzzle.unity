@@ -4127,7 +4127,7 @@ GameObject:
   - component: {fileID: 969009769}
   m_Layer: 0
   m_Name: platform (28)
-  m_TagString: Untagged
+  m_TagString: MovingPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5625,6 +5625,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -556980373527062883, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
+      propertyPath: JumpMax
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: -556980373527062883, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
       propertyPath: ammoText
       value: 
       objectReference: {fileID: 659306669}
@@ -5717,7 +5721,7 @@ GameObject:
   - component: {fileID: 1251943251}
   m_Layer: 0
   m_Name: platform (20)
-  m_TagString: Untagged
+  m_TagString: MovingPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
