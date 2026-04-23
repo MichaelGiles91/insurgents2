@@ -10,6 +10,8 @@ public class sideToSidePlatform : MonoBehaviour
     Vector3 startPOS;
     Vector3 rightPOS;
     Vector3 leftPOS;
+    private Vector3 lastPosition;
+    private Vector3 velocity;
 
     int targetIndex = 0;
     Vector3[] targets; 
@@ -29,7 +31,14 @@ public class sideToSidePlatform : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        velocity = (Platform.position - lastPosition) / Time.deltaTime;
+        lastPosition = Platform.position;
         MovePlatform();
+    }
+
+    public Vector3 GetVelocity()
+    {
+        return velocity;
     }
 
     void MovePlatform()
@@ -44,6 +53,22 @@ public class sideToSidePlatform : MonoBehaviour
             {
                 targetIndex = 0;
             }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.transform.SetParent(Platform);
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.transform.SetParent(null);
         }
     }
 }

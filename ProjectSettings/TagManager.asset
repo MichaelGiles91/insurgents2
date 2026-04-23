@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Player Respawn
   - Player Respawn Pos
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX
