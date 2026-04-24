@@ -622,7 +622,7 @@ GameObject:
   - component: {fileID: 512918592}
   m_Layer: 0
   m_Name: sofa
-  m_TagString: Sofa
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -642,7 +642,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -738,8 +738,8 @@ GameObject:
   - component: {fileID: 679898260}
   - component: {fileID: 679898259}
   m_Layer: 0
-  m_Name: Candle
-  m_TagString: Candle
+  m_Name: candle
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -759,7 +759,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1354,9 +1354,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 939481020}
+  - component: {fileID: 939481021}
   m_Layer: 0
   m_Name: air
-  m_TagString: Air
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1376,6 +1377,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &939481021
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939481019}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &967049111
 GameObject:
   m_ObjectHideFlags: 0
@@ -1702,28 +1724,27 @@ MonoBehaviour:
   Sofa: {fileID: 512918591}
   Air: {fileID: 939481019}
   Candle: {fileID: 679898258}
-  CurrI: {fileID: 1064979099}
   CR: 0
   RTL: 30
   R1ST: 0
-  R2ST: 165
-  R3ST: 250
   R1ET: 130
+  R2ST: 165
   R2ET: 208
+  R3ST: 250
   R3ET: 269
   EDST: 291
   EDET: 352
   RI1ST: 143
-  RI2ST: 187
-  RI3ST: 239
   RI1ET: 154
+  RI2ST: 187
   RI2ET: 204
+  RI3ST: 239
   RI3ET: 273
   RC1st: 148
-  RC2ST: 217
-  RC3ST: 278
   RC1ET: 161
+  RC2ST: 217
   RC2ET: 229
+  RC3ST: 278
   RC3ET: 290
 --- !u!4 &1064979105
 Transform:
@@ -2022,7 +2043,7 @@ GameObject:
   - component: {fileID: 2028736381}
   m_Layer: 0
   m_Name: clock
-  m_TagString: Clock
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2042,11 +2063,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2, y: 4, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2028736381
 MeshRenderer:
