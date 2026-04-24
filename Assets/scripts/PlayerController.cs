@@ -140,9 +140,12 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
 
         playerVel.y -= gravity * Time.deltaTime;
 
-        if (Input.GetButtonDown("Fire1") && gunList.Count > 0 && gunList[gunListPos].ammoCur > 0 && shootTimer >= shootRate)
+        if (Input.GetButtonDown("Fire1") && gunList.Count > 0 && shootTimer >= shootRate)
         {
-            shoot();
+            if (gunList[gunListPos].isPowerWeapon || gunList[gunListPos].ammoCur > 0)
+            {
+                shoot();
+            }
         }
 
         selectGun();
@@ -174,6 +177,8 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         //if (isReloading) return;
         if (gunList.Count == 0) return;
         if (gunListPos >= gunList.Count) return;
+
+        
 
         if (gunList[gunListPos].isPowerWeapon)
         {
@@ -219,20 +224,27 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         if (!isSwinging)
         {
             StartCoroutine(BatSwingAnim());
+            StartCoroutine(DelayedBatHit());
         }
+    }
+
+    IEnumerator DelayedBatHit()
+    {
+        yield return new WaitForSeconds(0.4f);
 
         RaycastHit hit;
-
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 3f))
         {
+            if (gunList[gunListPos].hitEffect != null)
+                Instantiate(gunList[gunListPos].hitEffect, hit.point, Quaternion.identity);
+
+            if (gunList[gunListPos].hitSound != null)
+                aud.PlayOneShot(gunList[gunListPos].hitSound, gunList[gunListPos].hitSoundVol);
+
             if (hit.collider.CompareTag("Enemy"))
             {
-                IDamage dmg = hit.collider.GetComponent<IDamage>();
-
-                if (dmg != null)
-                {
-                    dmg.takeDamage(shootDamage);
-                }
+                IDamage dmg = hit.collider.GetComponentInParent<IDamage>();
+                if (dmg != null) dmg.takeDamage(shootDamage);
             }
         }
     }
@@ -240,6 +252,8 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     void Reload()
     {
         if (isReloading) return;
+        if (gunList[gunListPos].isPowerWeapon) return;
+        if (Input.GetButton("sprint")) return;
         if (Input.GetButtonDown("Reload") && !isReloading && gunList.Count > 0)
         {
             StartCoroutine(ReloadRoutine());

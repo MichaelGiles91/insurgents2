@@ -13,14 +13,16 @@ MonoBehaviour:
   m_Name: Power_Bat
   m_EditorClassIdentifier: Assembly-CSharp::gunStats
   isPowerWeapon: 1
-  powerDuration: 15
+  powerDuration: 300
   powerMusic: {fileID: 8300000, guid: 0d9e9009a553e324293990fc383c8e60, type: 3}
-  gunModel: {fileID: 796996835362358867, guid: 7f034c939866ea2439d6d102cccb0a2b, type: 3}
+  gunModel: {fileID: 796996835362358867, guid: 62939a2551aa6f4408b73c3826ca16bb, type: 3}
   shootDamage: 10
   shootDist: 15
   shootRate: 0.1
-  ammoCur: 0
+  ammoCur: 5
   ammoMax: 5
-  hitEffect: {fileID: 0}
+  hitEffect: {fileID: 1301697207402410478, guid: 39f852c28f9c3fd45a427c24f3564ba7, type: 3}
   shootSound: []
   shootSoundVol: 0
+  hitSound: {fileID: 8300000, guid: 2439c550af47f90418d033e8d4b72c5a, type: 3}
+  hitSoundVol: 0.223

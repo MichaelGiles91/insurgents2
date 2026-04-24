@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8231186907859721259}
   - component: {fileID: 8693351174518112134}
   - component: {fileID: 5950988483558790210}
+  - component: {fileID: 3009414211593756226}
   m_Layer: 0
   m_Name: Bat_Power
   m_TagString: Untagged
@@ -27,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 796996835362358867}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.47814, y: 0.14, z: -70.57487}
+  m_LocalRotation: {x: 0, y: 0, z: 0.3045318, w: 0.9525022}
+  m_LocalPosition: {x: -2.05456, y: 1.42, z: -72.30608}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -39,7 +40,7 @@ Transform:
   - {fileID: 5427867614789467591}
   - {fileID: 508903677704106905}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 35.46}
 --- !u!205 &8231186907859721259
 LODGroup:
   m_ObjectHideFlags: 0
@@ -90,11 +91,11 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 3024677357141577303, guid: b62b8f690ef3859459494beaffaf8c0d, type: 3}
 --- !u!114 &5950988483558790210
@@ -111,6 +112,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GunPickup
   gun: {fileID: 11400000, guid: 622d3364c600f3f4fa2beb88e9a9eb28, type: 2}
   pickupText: {fileID: 0}
+--- !u!54 &3009414211593756226
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796996835362358867}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 1
 --- !u!1 &2810890096864882043
 GameObject:
   m_ObjectHideFlags: 0

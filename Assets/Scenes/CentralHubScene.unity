@@ -5044,6 +5044,10 @@ PrefabInstance:
       propertyPath: shootPoint
       value: 
       objectReference: {fileID: 1270794961}
+    - target: {fileID: -556980373527062883, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
+      propertyPath: isPowerWeapon
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 147023646130132008, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.26
