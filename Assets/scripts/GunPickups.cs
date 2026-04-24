@@ -32,6 +32,10 @@ public class GunPickup : MonoBehaviour, IPickup
     {
         if (other.CompareTag("Player"))
         {
+            if (pickupText == null)
+            {
+                return;
+            }
             isPlayerin = false;
             pickupText.SetActive(false);
         }

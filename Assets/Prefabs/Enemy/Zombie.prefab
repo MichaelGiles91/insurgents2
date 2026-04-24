@@ -4366,7 +4366,7 @@ GameObject:
   - component: {fileID: 699600156230880808}
   m_Layer: 0
   m_Name: Zombie
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4475,6 +4475,7 @@ MonoBehaviour:
   attackRange: 3
   animate: {fileID: 7875619547665529253}
   animateTransitionSpeed: 1
+  isDummy: 0
 --- !u!1 &6412153960736763935
 GameObject:
   m_ObjectHideFlags: 0

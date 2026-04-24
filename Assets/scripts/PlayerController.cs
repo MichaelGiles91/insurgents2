@@ -92,6 +92,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         sprint();
         updatePlayerUI();
         interact();
+        
 
         if (!isSwinging && !isReloading)
         {
@@ -145,7 +146,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         }
 
         selectGun();
-        reload();
+        Reload();
 
     }
     void Jump()
@@ -191,8 +192,8 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, shootDist, ~ignoreLayer))
-        { 
-            
+        {
+
 
             if (gunList[gunListPos].hitEffect != null)
                 Instantiate(gunList[gunListPos].hitEffect, hit.point, Quaternion.identity);
@@ -206,8 +207,9 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
             {
                 Debug.Log("[SHOOT] no hit");
             }
-        
-        updateAmmoUI();
+
+            updateAmmoUI();
+        }
     }
 
     void SwingBat()
@@ -235,7 +237,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         }
     }
 
-    void reload()
+    void Reload()
     {
         if (isReloading) return;
         if (Input.GetButtonDown("Reload") && !isReloading && gunList.Count > 0)
@@ -296,17 +298,9 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         {
             resetT += Time.deltaTime * 6f;
 
-            gun_Model.localPosition = Vector3.Lerp(
-                gun_Model.localPosition,
-                startPos,
-                resetT
-            );
+            gun_Model.localPosition = Vector3.Lerp(gun_Model.localPosition,startPos,resetT);
 
-            gun_Model.localRotation = Quaternion.Lerp(
-                gun_Model.localRotation,
-                startRot,
-                resetT
-            );
+            gun_Model.localRotation = Quaternion.Lerp(gun_Model.localRotation,startRot,resetT);
 
             yield return null;
         }
@@ -393,7 +387,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
 
         if (shootPoint == null)
         {
-            Debug.LogError("NO SHOOT POINT FOUND ON mEW GUN");
+            return;
         }
 
         shootDamage = gunList[gunListPos].shootDamage;
