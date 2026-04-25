@@ -142,7 +142,8 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
 
         if (Input.GetButtonDown("Fire1") && gunList.Count > 0 && shootTimer >= shootRate)
         {
-            if (gunList[gunListPos].isPowerWeapon || gunList[gunListPos].ammoCur > 0)
+            if (gunList[gunListPos].isPowerWeapon ||
+                (gunList[gunListPos].ammoCur > 0 && (gunList[gunListPos].ammoCur > 0 || gunList[gunListPos].ammoReserve > 0)))
             {
                 shoot();
             }
@@ -252,8 +253,10 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     void Reload()
     {
         if (isReloading) return;
+        if (gunList.Count == 0) return;
         if (gunList[gunListPos].isPowerWeapon) return;
         if (Input.GetButton("sprint")) return;
+        if (gunList[gunListPos].ammoReserve <= 0) return;
         if (Input.GetButtonDown("Reload") && !isReloading && gunList.Count > 0)
         {
             StartCoroutine(ReloadRoutine());
@@ -453,8 +456,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     void updateAmmoUI()
     {
         if (gunList.Count == 0) return;
-
-        ammoText.text = $"{gunList[gunListPos].ammoCur} / {gunList[gunListPos].ammoMax}";
+        ammoText.text = $"{gunList[gunListPos].ammoCur} / {gunList[gunListPos].ammoReserve}";
     }
 
 
@@ -464,7 +466,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         isReloading = true;
 
         Vector3 startPos = gun_Model.localPosition;
-        Vector3 downPos = startPos + new Vector3(0, -1.5f, 0); // deeper drop
+        Vector3 downPos = startPos + new Vector3(0, -1.5f, 0); 
 
         float t = 0;
 
@@ -485,7 +487,10 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         yield return new WaitForSeconds(reloadTime * 0.8f);
 
 
-        gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
+        int ammoNeeded = gunList[gunListPos].ammoMax - gunList[gunListPos].ammoCur;
+        int ammoTaken = Mathf.Min(ammoNeeded, gunList[gunListPos].ammoReserve);
+        gunList[gunListPos].ammoCur += ammoTaken;
+        gunList[gunListPos].ammoReserve -= ammoTaken;
         updateAmmoUI();
 
         t = 0;
