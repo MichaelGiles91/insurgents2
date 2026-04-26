@@ -7,6 +7,7 @@ public class ButtonFunctions : MonoBehaviour
 {
     public GameObject settingsPanel;
     public GameObject PauseMenu;
+    public GameObject CreditsPanel;
     public AudioSource aud;
     public AudioClip clickSFX;
 
@@ -56,6 +57,16 @@ public class ButtonFunctions : MonoBehaviour
     {
         StartCoroutine(QuitWithSound());
 
+    }
+    public void credits()
+    {
+        aud.PlayOneShot(clickSFX);
+        CreditsPanel.SetActive(true);
+    }
+    public void CloseCredits()
+    {
+        aud.PlayOneShot(clickSFX);
+        CreditsPanel?.SetActive(false); 
     }
     IEnumerator LoadSceneSound(string scene)
     {

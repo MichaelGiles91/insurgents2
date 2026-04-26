@@ -3698,6 +3698,10 @@ PrefabInstance:
       value: AmmoBox
       objectReference: {fileID: 0}
     - target: {fileID: 3755308005407077650, guid: a6c20a994124bc94999010eec3ca93a2, type: 3}
+      propertyPath: gunType
+      value: 
+      objectReference: {fileID: 11400000, guid: 26f851cf90957c74bbcbaa2d99972005, type: 2}
+    - target: {fileID: 3755308005407077650, guid: a6c20a994124bc94999010eec3ca93a2, type: 3}
       propertyPath: openCrate
       value: 
       objectReference: {fileID: 1290376322}
