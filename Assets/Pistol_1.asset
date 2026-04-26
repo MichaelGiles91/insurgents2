@@ -25,3 +25,7 @@ MonoBehaviour:
   shootSound:
   - {fileID: 8300000, guid: 04d465d2b9a52f14390024e73d3c10bf, type: 3}
   shootSoundVol: 0.36
+  hitSound: {fileID: 0}
+  hitSoundVol: 0
+  ammoReserve: 15
+  ammoReserveMax: 50

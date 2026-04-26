@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     [SerializeField] Transform shootPoint;
     [SerializeField] float bulletForce = 20f;
     [SerializeField] TMP_Text ammoText;
+    [SerializeField] TMP_Text gunNameText;
+    [SerializeField] float gunNameDisplayTime = 2f;
+    Coroutine gunNameCoroutine;
 
     [SerializeField] float recoilAmount = 0.1f;
     [SerializeField] float recoilSpeed = 10f;
@@ -407,6 +410,9 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
             return;
         }
 
+        if (gunNameCoroutine != null) StopCoroutine(gunNameCoroutine);
+        gunNameCoroutine = StartCoroutine(ShowGunName());
+
         shootDamage = gunList[gunListPos].shootDamage;
         shootDist = gunList[gunListPos].shootDist;
         shootRate = gunList[gunListPos].shootRate;
@@ -571,5 +577,26 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         {
             transform.SetParent(null);
         }
+    }
+
+    public void addAmmo(gunStats gunType, int amount)
+    {
+        for (int i = 0; i < gunList.Count; i++)
+        {
+            if (gunList[i] == gunType)
+            {
+                gunList[i].ammoReserve = Mathf.Min(gunList[i].ammoReserve + amount, gunList[i].ammoReserveMax);
+                updateAmmoUI();
+                return;
+            }
+        }
+    }
+
+    IEnumerator ShowGunName()
+    {
+        gunNameText.text = gunList[gunListPos].name;
+        gunNameText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(gunNameDisplayTime);
+        gunNameText.gameObject.SetActive(false);
     }
 }
