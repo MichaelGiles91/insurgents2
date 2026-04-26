@@ -3234,6 +3234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ButtonFunctions
   settingsPanel: {fileID: 1221820644}
   PauseMenu: {fileID: 1703842465}
+  CreditsPanel: {fileID: 0}
   aud: {fileID: 38584816}
   clickSFX: {fileID: 8300000, guid: 7694aff3f6a50d047bb65eb2649e1791, type: 3}
 --- !u!1 &596464075
@@ -10872,7 +10873,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8881798024467694996, guid: 6c5a36d938c43d94e82d8c30b35cde27, type: 3}
       propertyPath: 'objectiveNames.Array.data[1]'
-      value: Press the button to raise the target.  Press Right click to shoot
+      value: Press the button to raise the target.  Press Left click to shoot
       objectReference: {fileID: 0}
     - target: {fileID: 8881798024467694996, guid: 6c5a36d938c43d94e82d8c30b35cde27, type: 3}
       propertyPath: 'objectiveNames.Array.data[2]'
@@ -10896,7 +10897,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8881798024467694996, guid: 6c5a36d938c43d94e82d8c30b35cde27, type: 3}
       propertyPath: 'objectiveNames.Array.data[7]'
-      value: Kill the ZOMBIE! right click to swing the bat
+      value: Kill the ZOMBIE! Left click to swing the bat
       objectReference: {fileID: 0}
     - target: {fileID: 8881798024467694996, guid: 6c5a36d938c43d94e82d8c30b35cde27, type: 3}
       propertyPath: 'objectiveNames.Array.data[8]'
