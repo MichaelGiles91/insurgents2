@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     [SerializeField] Transform shootPoint;
     [SerializeField] float bulletForce = 20f;
     [SerializeField] TMP_Text ammoText;
+    [SerializeField] TMP_Text gunNameText;
+    [SerializeField] float gunNameDisplayTime = 2f;
+    Coroutine gunNameCoroutine;
 
     [SerializeField] float recoilAmount = 0.1f;
     [SerializeField] float recoilSpeed = 10f;
@@ -142,7 +145,8 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
 
         if (Input.GetButtonDown("Fire1") && gunList.Count > 0 && shootTimer >= shootRate)
         {
-            if (gunList[gunListPos].isPowerWeapon || gunList[gunListPos].ammoCur > 0)
+            if (gunList[gunListPos].isPowerWeapon ||
+                (gunList[gunListPos].ammoCur > 0 && (gunList[gunListPos].ammoCur > 0 || gunList[gunListPos].ammoReserve > 0)))
             {
                 shoot();
             }
@@ -256,6 +260,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         if (gunListPos < 0 || gunListPos >= gunList.Count) return;
         if (gunList[gunListPos].isPowerWeapon) return;
         if (Input.GetButton("sprint")) return;
+        if (gunList[gunListPos].ammoReserve <= 0) return;
         if (Input.GetButtonDown("Reload") && !isReloading && gunList.Count > 0)
         {
             StartCoroutine(ReloadRoutine());
@@ -413,6 +418,9 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
             return;
         }
 
+        if (gunNameCoroutine != null) StopCoroutine(gunNameCoroutine);
+        gunNameCoroutine = StartCoroutine(ShowGunName());
+
         shootDamage = gunList[gunListPos].shootDamage;
         shootDist = gunList[gunListPos].shootDist;
         shootRate = gunList[gunListPos].shootRate;
@@ -481,7 +489,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         isReloading = true;
 
         Vector3 startPos = gun_Model.localPosition;
-        Vector3 downPos = startPos + new Vector3(0, -1.5f, 0); // deeper drop
+        Vector3 downPos = startPos + new Vector3(0, -1.5f, 0); 
 
         float t = 0;
 
@@ -502,11 +510,10 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         yield return new WaitForSeconds(reloadTime * 0.8f);
 
 
-        int AmmoNeeded = gunList[gunListPos].ammoMax - gunList[gunListPos].ammoCur;
-        int AmmoToLoad = Mathf.Min(AmmoNeeded, gunList[gunListPos].ammoReserve);
-
-        gunList[gunListPos].ammoCur += AmmoToLoad;
-        gunList[gunListPos].ammoReserve -= AmmoToLoad;
+        int ammoNeeded = gunList[gunListPos].ammoMax - gunList[gunListPos].ammoCur;
+        int ammoTaken = Mathf.Min(ammoNeeded, gunList[gunListPos].ammoReserve);
+        gunList[gunListPos].ammoCur += ammoTaken;
+        gunList[gunListPos].ammoReserve -= ammoTaken;
         updateAmmoUI();
 
         t = 0;
@@ -587,5 +594,26 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         {
             transform.SetParent(null);
         }
+    }
+
+    public void addAmmo(gunStats gunType, int amount)
+    {
+        for (int i = 0; i < gunList.Count; i++)
+        {
+            if (gunList[i] == gunType)
+            {
+                gunList[i].ammoReserve = Mathf.Min(gunList[i].ammoReserve + amount, gunList[i].ammoReserveMax);
+                updateAmmoUI();
+                return;
+            }
+        }
+    }
+
+    IEnumerator ShowGunName()
+    {
+        gunNameText.text = gunList[gunListPos].name;
+        gunNameText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(gunNameDisplayTime);
+        gunNameText.gameObject.SetActive(false);
     }
 }
