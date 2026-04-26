@@ -219,6 +219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ButtonFunctions
   settingsPanel: {fileID: 718715760}
   PauseMenu: {fileID: 43528437}
+  CreditsPanel: {fileID: 0}
   aud: {fileID: 1419197281}
   clickSFX: {fileID: 8300000, guid: 7694aff3f6a50d047bb65eb2649e1791, type: 3}
 --- !u!1001 &103567161
@@ -1264,6 +1265,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6702519133884946421, guid: 17429990fb3967642bfa8165da7387e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926937649372119281, guid: 17429990fb3967642bfa8165da7387e5, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926937649372119281, guid: 17429990fb3967642bfa8165da7387e5, type: 3}
+      propertyPath: m_Center.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3233,7 +3242,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4225831764994582042, guid: 93be291213f4b9541b786db6ebc3d2f4, type: 3}
       propertyPath: respawnTime
-      value: 0
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 6226478965891238227, guid: 93be291213f4b9541b786db6ebc3d2f4, type: 3}
       propertyPath: m_Name
@@ -6653,6 +6662,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4880689107770724972, guid: 43fad2f827e8052459efda2bc20f5045, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880689107770724972, guid: 43fad2f827e8052459efda2bc20f5045, type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7919549562936002274, guid: 43fad2f827e8052459efda2bc20f5045, type: 3}
       propertyPath: m_Name
       value: Pistol_I
@@ -8526,7 +8543,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4225831764994582042, guid: 93be291213f4b9541b786db6ebc3d2f4, type: 3}
       propertyPath: respawnTime
-      value: 0
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 6226478965891238227, guid: 93be291213f4b9541b786db6ebc3d2f4, type: 3}
       propertyPath: m_Name
@@ -9061,7 +9078,7 @@ PrefabInstance:
     - target: {fileID: 868342211065913414, guid: ed3a81625fc05b34f8f648c67b26ba7c, type: 3}
       propertyPath: m_Resource
       value: 
-      objectReference: {fileID: 8300000, guid: 0d9e9009a553e324293990fc383c8e60, type: 3}
+      objectReference: {fileID: 8300000, guid: 1146d06ff69d0424bbafea079119771a, type: 3}
     - target: {fileID: 1296029836334300376, guid: ed3a81625fc05b34f8f648c67b26ba7c, type: 3}
       propertyPath: m_Name
       value: MusicManager

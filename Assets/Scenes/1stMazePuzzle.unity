@@ -2965,6 +2965,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ButtonFunctions
   settingsPanel: {fileID: 1458570329}
   PauseMenu: {fileID: 1627347332}
+  CreditsPanel: {fileID: 0}
   aud: {fileID: 32047852}
   clickSFX: {fileID: 8300000, guid: 7694aff3f6a50d047bb65eb2649e1791, type: 3}
 --- !u!1 &318132522
@@ -10907,13 +10908,17 @@ PrefabInstance:
       propertyPath: spawnRate
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1258866851254769788, guid: a82f6c25d28327a4cb29da3e81dd767f, type: 3}
+      propertyPath: spawnAmount
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2203984420110487857, guid: a82f6c25d28327a4cb29da3e81dd767f, type: 3}
       propertyPath: m_Name
       value: Zombie Spawner 2
       objectReference: {fileID: 0}
     - target: {fileID: 5063633807995894860, guid: a82f6c25d28327a4cb29da3e81dd767f, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.44096
+      value: 0.025331387
       objectReference: {fileID: 0}
     - target: {fileID: 5063633807995894860, guid: a82f6c25d28327a4cb29da3e81dd767f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10921,7 +10926,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5063633807995894860, guid: a82f6c25d28327a4cb29da3e81dd767f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 21.37
+      value: 19.85
       objectReference: {fileID: 0}
     - target: {fileID: 5063633807995894860, guid: a82f6c25d28327a4cb29da3e81dd767f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11093,6 +11098,10 @@ PrefabInstance:
       propertyPath: spawnRate
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1258866851254769788, guid: a82f6c25d28327a4cb29da3e81dd767f, type: 3}
+      propertyPath: spawnAmount
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2203984420110487857, guid: a82f6c25d28327a4cb29da3e81dd767f, type: 3}
       propertyPath: m_Name
       value: Zombie Spawner 2 (1)
@@ -11103,7 +11112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5063633807995894860, guid: a82f6c25d28327a4cb29da3e81dd767f, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.44096
+      value: 0.13264959
       objectReference: {fileID: 0}
     - target: {fileID: 5063633807995894860, guid: a82f6c25d28327a4cb29da3e81dd767f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11111,7 +11120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5063633807995894860, guid: a82f6c25d28327a4cb29da3e81dd767f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 43.57
+      value: 41.81
       objectReference: {fileID: 0}
     - target: {fileID: 5063633807995894860, guid: a82f6c25d28327a4cb29da3e81dd767f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -12847,6 +12856,10 @@ PrefabInstance:
       propertyPath: spawnRate
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1258866851254769788, guid: a82f6c25d28327a4cb29da3e81dd767f, type: 3}
+      propertyPath: spawnAmount
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2203984420110487857, guid: a82f6c25d28327a4cb29da3e81dd767f, type: 3}
       propertyPath: m_Name
       value: Zombie Spawner 2 (2)
@@ -12857,7 +12870,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5063633807995894860, guid: a82f6c25d28327a4cb29da3e81dd767f, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.44096
+      value: 0.20210959
       objectReference: {fileID: 0}
     - target: {fileID: 5063633807995894860, guid: a82f6c25d28327a4cb29da3e81dd767f, type: 3}
       propertyPath: m_LocalPosition.x

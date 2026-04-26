@@ -543,7 +543,7 @@ MonoBehaviour:
   fireBall: {fileID: 6411377967987673738, guid: 81868a39dc95e2347bae0772ef122d21, type: 3}
   shootPos: {fileID: 683114577}
   model: {fileID: 749541815}
-  bossHP: 100
+  bossHP: 250
   bossSpeed: 5
   shootRate: 2
   jumpRate: 3
@@ -2073,6 +2073,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ButtonFunctions
   settingsPanel: {fileID: 480688393}
   PauseMenu: {fileID: 1170359809}
+  CreditsPanel: {fileID: 0}
   aud: {fileID: 628967876}
   clickSFX: {fileID: 8300000, guid: 7694aff3f6a50d047bb65eb2649e1791, type: 3}
 --- !u!1 &1268366373 stripped

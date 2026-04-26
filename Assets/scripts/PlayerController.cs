@@ -212,10 +212,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
             {
                 dmg.takeDamage(shootDamage);
             }
-            else
-            {
-                Debug.Log("[SHOOT] no hit");
-            }
+            
 
             updateAmmoUI();
         }
@@ -223,7 +220,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
 
     void SwingBat()
     {
-        Debug.Log("BAT SWING");
+        
 
         if (!isSwinging)
         {
@@ -460,7 +457,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
             {
                 IPickup pickup = hit.collider.GetComponent<IPickup>();
 
-                Debug.Log(hit.collider.name);
+                
                 if (pickup != null)
                 {
                     pickup.pickup(this);
