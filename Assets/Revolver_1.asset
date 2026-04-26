@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7f0fc579e15531498e4096f96c3b049, type: 3}
+  m_Name: Revolver_1
+  m_EditorClassIdentifier: Assembly-CSharp::gunStats
+  isPowerWeapon: 0
+  powerDuration: 10
+  powerMusic: {fileID: 0}
+  gunModel: {fileID: 2913256777252581994, guid: b5699e98277bfd246ae755544484e840, type: 3}
+  shootDamage: 2
+  shootDist: 500
+  shootRate: 0.1
+  ammoCur: 6
+  ammoReserve: 48
+  ammoReserveMax: 48
+  ammoMax: 6
+  hitEffect: {fileID: 970440554703164915, guid: 47096eff328e11a418ace7db2d72aa97, type: 3}
+  shootSound:
+  - {fileID: 8300000, guid: 04d465d2b9a52f14390024e73d3c10bf, type: 3}
+  shootSoundVol: 0.45
+  hitSound: {fileID: 0}
+  hitSoundVol: 0
