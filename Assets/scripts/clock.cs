@@ -2,24 +2,29 @@ using UnityEngine;
 
 public class Clock : MonoBehaviour, IInteractable
 {
-  [SerializeField] private TR tr;
+    [SerializeField] private TR tr;
+    [SerializeField] private int answerValue;
+    [SerializeField] private int correctAnswer;
 
-  public void Interact()
-  {
-    if (tr == null)
+    public void Interact()
     {
-      Debug.LogError("TR reference is missing on Clock.");
-      return;
-    }
+        if (tr == null)
+        {
+            Debug.LogError("TR reference missing on Clock");
+            return;
+        }
 
-    if (!tr.CanAnswer)
-    {
-      Debug.Log("Clock too early (riddle not ready for answers)");
-      return;
-    }
+        // Block during riddle playback
+        if (tr.IsRiddlePlaying)
+            return;
 
-    Debug.Log("Clock selected (ANSWER 1)");
+        // Only allow Riddle 1 logic here
+        if (tr.CurrentRiddle != 1)
+        {
+            tr.SubmitAnswer(-1);
+            return;
+        }
 
-    tr.SubmitAnswer(1);
+        tr.SubmitAnswer(answerValue);
     }
 }

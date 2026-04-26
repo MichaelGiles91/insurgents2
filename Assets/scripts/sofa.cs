@@ -8,18 +8,15 @@ public class Sofa : MonoBehaviour, IInteractable
     {
         if (tr == null)
         {
-            Debug.LogError("TR reference missing on Sofa.");
+            Debug.LogError("TR reference missing on Sofa");
             return;
         }
 
-        if (!tr.CanAnswer)
-        {
-            Debug.Log("Sofa too early (not in answer phase)");
+        // Block during riddle playback
+        if (tr.IsRiddlePlaying)
             return;
-        }
 
-        Debug.Log("SOFA TRAP ACTIVATED (WRONG ANSWER)");
-
-        tr.SubmitAnswer(-999);
+        // Always wrong answer no matter the riddle
+        tr.SubmitAnswer(-1);
     }
 }

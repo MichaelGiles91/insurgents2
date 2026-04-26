@@ -3,23 +3,28 @@ using UnityEngine;
 public class Air : MonoBehaviour, IInteractable
 {
     [SerializeField] private TR tr;
+    [SerializeField] private int answerValue;
+    [SerializeField] private int correctAnswer;
 
     public void Interact()
     {
         if (tr == null)
         {
-            Debug.LogError("TR reference is missing on Air.");
+            Debug.LogError("TR reference missing on Air");
             return;
         }
 
-        if (!tr.CanAnswer)
+        // Block during riddle playback
+        if (tr.IsRiddlePlaying)
+            return;
+
+        // Only allow Riddle 2 logic here
+        if (tr.CurrentRiddle != 2)
         {
-            Debug.Log("Air too early (riddle not ready for answers)");
+            tr.SubmitAnswer(-1);
             return;
         }
 
-        Debug.Log("Air selected (ANSWER 2)");
-
-        tr.SubmitAnswer(2);
+        tr.SubmitAnswer(answerValue);
     }
 }

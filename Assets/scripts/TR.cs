@@ -7,6 +7,7 @@ public class TR : MonoBehaviour, IInteractable
     [SerializeField] float R1ST, R1ET;
     [SerializeField] float R2ST, R2ET;
     [SerializeField] float R3ST, R3ET;
+    [SerializeField] float EDST, EDET;
 
     [SerializeField] private float RTL = 300f;
 
@@ -24,6 +25,9 @@ public class TR : MonoBehaviour, IInteractable
     private int correctAnswer = -1;
 
     private int currentRiddle = 1;
+
+    public bool IsRiddlePlaying => isRiddleActive;
+    public int CurrentRiddle => currentRiddle;
 
     private void Start()
     {
@@ -49,6 +53,13 @@ public class TR : MonoBehaviour, IInteractable
             hasEvaluated = true;
             CanAnswer = true;
             Tape.Stop();
+        }
+
+        // ✅ ADDED: forces evaluation after answer is given
+        if (hasAnswered && !hasEvaluated)
+        {
+            hasEvaluated = true;
+            EvaluateAnswer();
         }
     }
 
@@ -102,7 +113,11 @@ public class TR : MonoBehaviour, IInteractable
     {
         Debug.Log("SubmitAnswer: " + answer);
 
-        if (!CanAnswer) return;
+        if (!CanAnswer)
+        {
+            Debug.Log("Blocked: CanAnswer is false");
+            return;
+        }
 
         selectedAnswer = answer;
         hasAnswered = true;
@@ -113,7 +128,7 @@ public class TR : MonoBehaviour, IInteractable
         if (!isRiddleActive) return;
 
         isRiddleActive = false;
-        CanAnswer = false;   // 🔥 LOCK AGAIN AFTER EVALUATION
+        CanAnswer = false;
 
         if (Tape != null)
             Tape.Stop();

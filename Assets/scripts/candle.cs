@@ -3,23 +3,28 @@ using UnityEngine;
 public class Candle : MonoBehaviour, IInteractable
 {
     [SerializeField] private TR tr;
+    [SerializeField] private int answerValue;
+    [SerializeField] private int correctAnswer;
 
     public void Interact()
     {
         if (tr == null)
         {
-            Debug.LogError("TR reference is missing on Candle.");
+            Debug.LogError("TR reference missing on Air");
             return;
         }
 
-        if (!tr.CanAnswer)
+        // Block during riddle playback
+        if (tr.IsRiddlePlaying)
+            return;
+
+        // Only allow Riddle 3 logic here
+        if (tr.CurrentRiddle != 3)
         {
-            Debug.Log("Candle too early (riddle not ready for answers)");
+            tr.SubmitAnswer(-1);
             return;
         }
 
-        Debug.Log("Candle selected (ANSWER 3)");
-
-        tr.SubmitAnswer(3);
+        tr.SubmitAnswer(answerValue);
     }
 }

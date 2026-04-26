@@ -646,7 +646,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2, y: 3, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &512918593
 MeshRenderer:
@@ -763,7 +763,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2, y: 3, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &679898260
 MeshRenderer:
@@ -997,7 +997,9 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: resume
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3167579570483583764, guid: d1340db50eb3a584a9e4269c1ef95f77, type: 3}
+    - {fileID: 1696347721516823263, guid: d1340db50eb3a584a9e4269c1ef95f77, type: 3}
     m_RemovedGameObjects:
     - {fileID: 245865421840420936, guid: d1340db50eb3a584a9e4269c1ef95f77, type: 3}
     m_AddedGameObjects: []
@@ -1085,18 +1087,24 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3950506630452224671, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
+    - {fileID: 1427196210778208033, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
+    - {fileID: 2698563337301349804, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2483106547499671628, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
-      insertIndex: 3
+      insertIndex: 1
       addedObject: {fileID: 1448933771}
+    - targetCorrespondingSourceObject: {fileID: 2483106547499671628, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 1448933779}
     - targetCorrespondingSourceObject: {fileID: 2483106547499671628, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1448933776}
     - targetCorrespondingSourceObject: {fileID: 1584413784639640720, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
-      insertIndex: 4
+      insertIndex: -1
       addedObject: {fileID: 1242245120}
     - targetCorrespondingSourceObject: {fileID: 89140374465635079, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
       insertIndex: 1
@@ -1406,7 +1414,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2, y: 4, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &967049111
 GameObject:
@@ -1735,6 +1743,9 @@ MonoBehaviour:
   R2ET: 208
   R3ST: 250
   R3ET: 469
+  EDST: 491
+  EDET: 352
+  RTL: 300
 --- !u!4 &1064979105
 Transform:
   m_ObjectHideFlags: 0
@@ -1856,8 +1867,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 453384018282dd14fb1cc8854df6d73c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteract
-  cam: {fileID: 0}
-  range: 3
+--- !u!54 &1448933779
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448933768}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1452201357
 GameObject:
   m_ObjectHideFlags: 0
@@ -1987,8 +2023,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 453384018282dd14fb1cc8854df6d73c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteract
-  cam: {fileID: 1242245125}
-  range: 3
 --- !u!1 &1653321856 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8099090312519793263, guid: d1340db50eb3a584a9e4269c1ef95f77, type: 3}
