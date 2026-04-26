@@ -1,107 +1,166 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TR : MonoBehaviour, IInteractable
 {
-  [SerializeField] private AudioSource Tape;
+    [SerializeField] private AudioSource Tape;
 
-  [SerializeField] private int correctAnswer = 1;
-  [SerializeField] private float RTL = 30f;
+    [SerializeField] float R1ST, R1ET;
+    [SerializeField] float R2ST, R2ET;
+    [SerializeField] float R3ST, R3ET;
 
-  private float riddleTimer;
-  private float tapeTimer;
+    [SerializeField] private float RTL = 300f;
 
-  private bool isRiddleActive;
-  private bool isTapePlaying;
+    private float riddleTimer;
+    private float currentStart;
+    private float currentEnd;
 
-  private void Start()
-  {
-    if (Tape == null)
-    Tape = GetComponent<AudioSource>();
-  }
+    private bool isRiddleActive = false;
+    private bool hasAnswered = false;
+    private bool hasEvaluated = false;
+
+    public bool CanAnswer { get; private set; }
+
+    private int selectedAnswer = -1;
+    private int correctAnswer = -1;
+
+    private int currentRiddle = 1;
+
+    private void Start()
+    {
+        if (Tape == null)
+            Tape = GetComponent<AudioSource>();
+    }
 
     private void Update()
     {
-      if (Input.GetKeyDown(KeyCode.E) && !isRiddleActive)
-      {
-        StartRiddle();
-      }
+        if (!isRiddleActive) return;
 
-      if (isRiddleActive)
-      {
         riddleTimer += Time.deltaTime;
 
         if (riddleTimer >= RTL)
         {
-          FailRiddle();
+            Debug.Log("TIMER EXPIRED");
+            FailRiddle();
+            return;
         }
-      }
 
-      if (isTapePlaying)
-      {
-        tapeTimer += Time.deltaTime;
-      }
+        if (!hasEvaluated && Tape.time >= currentEnd)
+        {
+            hasEvaluated = true;
+            CanAnswer = true;
+            Tape.Stop();
+        }
     }
 
     public void Interact()
     {
-      if (!isRiddleActive)
-      {
-        StartRiddle();
-      }
+        if (!isRiddleActive)
+        {
+            StartRiddle();
+        }
     }
 
     public void StartRiddle()
-  {
-    isRiddleActive = true;
-    isTapePlaying = true;
-
-    riddleTimer = 0f;
-    tapeTimer = 0f;
-
-    Debug.Log("Riddle Started");
-
-    if (Tape != null)
-    Tape.Play();
-  }
-
-  public void SubmitAnswer(int answer)
-  {
-    if (!isRiddleActive)
-    return;
-
-    if (answer == correctAnswer)
     {
-      CompleteRiddle();
+        isRiddleActive = true;
+        hasAnswered = false;
+        hasEvaluated = false;
+
+        CanAnswer = false;
+
+        selectedAnswer = -1;
+        riddleTimer = 0f;
+
+        switch (currentRiddle)
+        {
+            case 1:
+                currentStart = R1ST;
+                currentEnd = R1ET;
+                correctAnswer = 1;
+                break;
+
+            case 2:
+                currentStart = R2ST;
+                currentEnd = R2ET;
+                correctAnswer = 3;
+                break;
+
+            case 3:
+                currentStart = R3ST;
+                currentEnd = R3ET;
+                correctAnswer = 4;
+                break;
+        }
+
+        Tape.time = currentStart;
+        Tape.Play();
+
+        Debug.Log("Riddle " + currentRiddle + " Started");
     }
-        
-    else
+
+    public void SubmitAnswer(int answer)
     {
-      FailRiddle();
+        Debug.Log("SubmitAnswer: " + answer);
+
+        if (!CanAnswer) return;
+
+        selectedAnswer = answer;
+        hasAnswered = true;
     }
-  }
 
-  public void FailRiddle()
-  {
-    if (!isRiddleActive)
-    return;
+    private void EvaluateAnswer()
+    {
+        if (!isRiddleActive) return;
 
-    isRiddleActive = false;
-    isTapePlaying = false;
+        isRiddleActive = false;
+        CanAnswer = false;   // 🔥 LOCK AGAIN AFTER EVALUATION
 
-    Debug.Log("RIDDLE FAILED (DEATH)");
+        if (Tape != null)
+            Tape.Stop();
 
-    if (Tape != null)
-    Tape.Stop();
-  }
+        Debug.Log("Selected: " + selectedAnswer + " | Correct: " + correctAnswer);
 
-  private void CompleteRiddle()
-  {
-    isRiddleActive = false;
-    isTapePlaying = false;
+        if (!hasAnswered)
+        {
+            FailRiddle();
+            return;
+        }
 
-    Debug.Log("RIDDLE COMPLETED");
+        if (selectedAnswer == correctAnswer)
+        {
+            CompleteRiddle();
+        }
+        else
+        {
+            FailRiddle();
+        }
+    }
 
-    if (Tape != null)
-    Tape.Stop();
-  }
+    private void CompleteRiddle()
+    {
+        Debug.Log("RIDDLE COMPLETED");
+
+        CanAnswer = false;
+
+        currentRiddle++;
+
+        if (currentRiddle > 3)
+        {
+            Debug.Log("ALL RIDDLES COMPLETE");
+            return;
+        }
+
+        StartRiddle();
+    }
+
+    private void FailRiddle()
+    {
+        isRiddleActive = false;
+        CanAnswer = false;
+
+        if (Tape != null)
+            Tape.Stop();
+
+        Debug.Log("RIDDLE FAILED (DEATH)");
+    }
 }

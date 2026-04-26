@@ -2,18 +2,24 @@ using UnityEngine;
 
 public class Air : MonoBehaviour, IInteractable
 {
-  [SerializeField] private TR tr;
+    [SerializeField] private TR tr;
 
-  public void Interact()
-  {
-    Debug.Log("Air selected (ANSWER 2)");
-
-    if (tr == null)
+    public void Interact()
     {
-      Debug.LogError("TR reference is missing on Air.");
-      return;
-    }
+        if (tr == null)
+        {
+            Debug.LogError("TR reference is missing on Air.");
+            return;
+        }
 
-    tr.SubmitAnswer(2);
-  }
+        if (!tr.CanAnswer)
+        {
+            Debug.Log("Air too early (riddle not ready for answers)");
+            return;
+        }
+
+        Debug.Log("Air selected (ANSWER 2)");
+
+        tr.SubmitAnswer(2);
+    }
 }

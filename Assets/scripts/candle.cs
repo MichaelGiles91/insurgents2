@@ -2,18 +2,24 @@ using UnityEngine;
 
 public class Candle : MonoBehaviour, IInteractable
 {
-  [SerializeField] private TR tr;
+    [SerializeField] private TR tr;
 
-  public void Interact()
-  {
-    Debug.Log("Candle selected (ANSWER 3)");
-
-    if (tr == null)
+    public void Interact()
     {
-      Debug.LogError("TR reference is missing on Candle.");
-      return;
-    }
+        if (tr == null)
+        {
+            Debug.LogError("TR reference is missing on Candle.");
+            return;
+        }
 
-    tr.SubmitAnswer(3);
-  }
+        if (!tr.CanAnswer)
+        {
+            Debug.Log("Candle too early (riddle not ready for answers)");
+            return;
+        }
+
+        Debug.Log("Candle selected (ANSWER 3)");
+
+        tr.SubmitAnswer(3);
+    }
 }

@@ -1077,6 +1077,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2698563337301349804, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1242245125}
     - target: {fileID: 7921904823866064780, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1
@@ -1088,9 +1092,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2483106547499671628, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
       insertIndex: 3
       addedObject: {fileID: 1448933771}
+    - targetCorrespondingSourceObject: {fileID: 2483106547499671628, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1448933776}
     - targetCorrespondingSourceObject: {fileID: 1584413784639640720, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
       insertIndex: 4
       addedObject: {fileID: 1242245120}
+    - targetCorrespondingSourceObject: {fileID: 89140374465635079, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 1470605778}
   m_SourcePrefab: {fileID: 100100000, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
 --- !u!1 &876670729 stripped
 GameObject:
@@ -1718,34 +1728,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90189086b9b719547bc5b6aed6ae10fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::tapeRecorder
-  recorder: {fileID: 438993681}
-  Clock: {fileID: 2028736379}
   Tape: {fileID: 1064979102}
-  Sofa: {fileID: 512918591}
-  Air: {fileID: 939481019}
-  Candle: {fileID: 679898258}
-  CR: 0
-  RTL: 30
   R1ST: 0
   R1ET: 130
   R2ST: 165
   R2ET: 208
   R3ST: 250
-  R3ET: 269
-  EDST: 291
-  EDET: 352
-  RI1ST: 143
-  RI1ET: 154
-  RI2ST: 187
-  RI2ET: 204
-  RI3ST: 239
-  RI3ET: 273
-  RC1st: 148
-  RC1ET: 161
-  RC2ST: 217
-  RC2ET: 229
-  RC3ST: 278
-  RC3ET: 290
+  R3ET: 469
 --- !u!4 &1064979105
 Transform:
   m_ObjectHideFlags: 0
@@ -1783,6 +1772,11 @@ MonoBehaviour:
   lockVertMin: -90
   lockVertMax: 90
   invertY: 0
+--- !u!20 &1242245125 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 6392218741649358721, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
+  m_PrefabInstance: {fileID: 868302954}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1321382753 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4629839418481099475, guid: d1340db50eb3a584a9e4269c1ef95f77, type: 3}
@@ -1850,6 +1844,20 @@ MonoBehaviour:
   shootRate: 0
   gunModel: {fileID: 0}
   aud: {fileID: 0}
+--- !u!114 &1448933776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448933768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 453384018282dd14fb1cc8854df6d73c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteract
+  cam: {fileID: 0}
+  range: 3
 --- !u!1 &1452201357
 GameObject:
   m_ObjectHideFlags: 0
@@ -1962,6 +1970,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!1 &1470605773 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 89140374465635079, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
+  m_PrefabInstance: {fileID: 868302954}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1470605778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470605773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 453384018282dd14fb1cc8854df6d73c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteract
+  cam: {fileID: 1242245125}
+  range: 3
 --- !u!1 &1653321856 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8099090312519793263, guid: d1340db50eb3a584a9e4269c1ef95f77, type: 3}

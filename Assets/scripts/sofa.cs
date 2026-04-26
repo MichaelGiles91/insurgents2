@@ -2,18 +2,24 @@ using UnityEngine;
 
 public class Sofa : MonoBehaviour, IInteractable
 {
-  [SerializeField] private TR tr;
+    [SerializeField] private TR tr;
 
-  public void Interact()
-  {
-    Debug.Log("Sofa selected (NOT AN ANSWER)");
-
-    if (tr == null)
+    public void Interact()
     {
-      Debug.LogError("TR reference is missing on Sofa.");
-      return;
-    }
+        if (tr == null)
+        {
+            Debug.LogError("TR reference missing on Sofa.");
+            return;
+        }
 
-    tr.FailRiddle();
-  }
+        if (!tr.CanAnswer)
+        {
+            Debug.Log("Sofa too early (not in answer phase)");
+            return;
+        }
+
+        Debug.Log("SOFA TRAP ACTIVATED (WRONG ANSWER)");
+
+        tr.SubmitAnswer(-999);
+    }
 }
