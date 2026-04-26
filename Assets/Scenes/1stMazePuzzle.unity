@@ -617,9 +617,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 512918595}
+  - component: {fileID: 512918596}
+  - component: {fileID: 512918592}
   - component: {fileID: 512918594}
   - component: {fileID: 512918593}
-  - component: {fileID: 512918592}
   m_Layer: 0
   m_Name: sofa
   m_TagString: Untagged
@@ -720,6 +721,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &512918596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512918591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fd59035d1c85a441a4b305593cb9ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
+  tr: {fileID: 1064979104}
+  riddleNumber: 0
+  answerValue: 0
+  alwaysWrong: 1
 --- !u!1 &540655559 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2472079486022345050, guid: d1340db50eb3a584a9e4269c1ef95f77, type: 3}
@@ -734,9 +751,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 679898262}
+  - component: {fileID: 679898263}
+  - component: {fileID: 679898259}
   - component: {fileID: 679898261}
   - component: {fileID: 679898260}
-  - component: {fileID: 679898259}
   m_Layer: 0
   m_Name: candle
   m_TagString: Untagged
@@ -837,6 +855,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &679898263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679898258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fd59035d1c85a441a4b305593cb9ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
+  tr: {fileID: 1064979104}
+  riddleNumber: 3
+  answerValue: 0
+  alwaysWrong: 0
 --- !u!1001 &824292954
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1098,17 +1132,11 @@ PrefabInstance:
       insertIndex: 1
       addedObject: {fileID: 1448933771}
     - targetCorrespondingSourceObject: {fileID: 2483106547499671628, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
-      insertIndex: 2
-      addedObject: {fileID: 1448933779}
-    - targetCorrespondingSourceObject: {fileID: 2483106547499671628, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1448933776}
     - targetCorrespondingSourceObject: {fileID: 1584413784639640720, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1242245120}
-    - targetCorrespondingSourceObject: {fileID: 89140374465635079, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 1470605778}
   m_SourcePrefab: {fileID: 100100000, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
 --- !u!1 &876670729 stripped
 GameObject:
@@ -1372,6 +1400,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 939481020}
+  - component: {fileID: 939481022}
   - component: {fileID: 939481021}
   m_Layer: 0
   m_Name: air
@@ -1416,6 +1445,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 4, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &939481022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939481019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fd59035d1c85a441a4b305593cb9ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
+  tr: {fileID: 1064979104}
+  riddleNumber: 2
+  answerValue: 0
+  alwaysWrong: 0
 --- !u!1 &967049111
 GameObject:
   m_ObjectHideFlags: 0
@@ -1867,33 +1912,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 453384018282dd14fb1cc8854df6d73c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteract
---- !u!54 &1448933779
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1448933768}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  cam: {fileID: 0}
+  interactDistance: 3
 --- !u!1 &1452201357
 GameObject:
   m_ObjectHideFlags: 0
@@ -2006,23 +2026,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!1 &1470605773 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 89140374465635079, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
-  m_PrefabInstance: {fileID: 868302954}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1470605778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1470605773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 453384018282dd14fb1cc8854df6d73c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteract
 --- !u!1 &1653321856 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8099090312519793263, guid: d1340db50eb3a584a9e4269c1ef95f77, type: 3}
@@ -2099,9 +2102,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2028736383}
+  - component: {fileID: 2028736385}
   - component: {fileID: 2028736382}
   - component: {fileID: 2028736380}
   - component: {fileID: 2028736381}
+  - component: {fileID: 2028736384}
   m_Layer: 0
   m_Name: clock
   m_TagString: Untagged
@@ -2202,6 +2207,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2028736384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028736379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fd59035d1c85a441a4b305593cb9ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
+  tr: {fileID: 0}
+  riddleNumber: 0
+  answerValue: 0
+  alwaysWrong: 0
+--- !u!114 &2028736385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028736379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fd59035d1c85a441a4b305593cb9ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
+  tr: {fileID: 1064979104}
+  riddleNumber: 1
+  answerValue: 0
+  alwaysWrong: 0
 --- !u!1 &2036019313
 GameObject:
   m_ObjectHideFlags: 0

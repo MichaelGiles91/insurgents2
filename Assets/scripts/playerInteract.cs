@@ -1,40 +1,32 @@
 using UnityEngine;
 
-public class PlayerInteract : MonoBehaviour
+public class PlayerInteractor : MonoBehaviour
 {
-    private IInteractable currentInteractable;
+    [SerializeField] private float interactDistance = 3f;
+    [SerializeField] private LayerMask ignoreLayer;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetButtonDown("Fire2"))
         {
-            if (currentInteractable != null)
+            TryInteract();
+        }
+    }
+
+    void TryInteract()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, interactDistance, ~ignoreLayer))
+        {
+            Debug.Log("Interact hit: " + hit.collider.name);
+
+            SimpleInteractable interactable = hit.collider.GetComponentInParent<SimpleInteractable>();
+
+            if (interactable != null)
             {
-                Debug.Log("Interacting with: " + currentInteractable);
-                currentInteractable.Interact();
+                interactable.Interact();
             }
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        IInteractable interactable = other.GetComponentInParent<IInteractable>();
-
-        if (interactable != null)
-        {
-            currentInteractable = interactable;
-            Debug.Log("In range: " + other.name);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        IInteractable interactable = other.GetComponentInParent<IInteractable>();
-
-        if (interactable != null && interactable == currentInteractable)
-        {
-            currentInteractable = null;
-            Debug.Log("Out of range: " + other.name);
         }
     }
 }
