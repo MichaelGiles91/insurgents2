@@ -38,6 +38,8 @@ public class spawn : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Spawner trigger hit by: " + other.name);
+
             startSpawning = true;
         }
     }

@@ -252,12 +252,15 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     void Reload()
     {
         if (isReloading) return;
+        if (gunList.Count == 0) return;
+        if (gunListPos < 0 || gunListPos >= gunList.Count) return;
         if (gunList[gunListPos].isPowerWeapon) return;
         if (Input.GetButton("sprint")) return;
         if (Input.GetButtonDown("Reload") && !isReloading && gunList.Count > 0)
         {
             StartCoroutine(ReloadRoutine());
         }
+
     }
 
     IEnumerator BatSwingAnim()
@@ -364,7 +367,13 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     }
     public void getGunStats(gunStats gun)
     {
-        gunList.Add(gun);
+
+        gunStats RuntimeGun = Instantiate(gun);
+
+        RuntimeGun.ammoCur = RuntimeGun.ammoMax;
+        RuntimeGun.ammoReserve = RuntimeGun.ammoReserveMax;
+
+        gunList.Add(RuntimeGun);
         gunListPos = gunList.Count - 1;
 
         shootDamage = gun.shootDamage;
@@ -378,9 +387,9 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         changeGun();
         updateAmmoUI();
 
-        if (gun.isPowerWeapon)
+        if (RuntimeGun.isPowerWeapon)
         {
-            StartCoroutine(powerWeaponRoutine(gun));
+            StartCoroutine(powerWeaponRoutine(RuntimeGun));
         }
     }
 
@@ -452,9 +461,17 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     }
     void updateAmmoUI()
     {
-        if (gunList.Count == 0) return;
+        if (gunList.Count == 0)
+        {
+            ammoText.text = "";
+            return;
+        }
+        if(gunListPos < 0 || gunListPos >= gunList.Count)
+        {
+            return;
+        }
 
-        ammoText.text = $"{gunList[gunListPos].ammoCur} / {gunList[gunListPos].ammoMax}";
+        ammoText.text = $"{gunList[gunListPos].ammoCur} / {gunList[gunListPos].ammoReserve}";
     }
 
 
@@ -485,7 +502,11 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         yield return new WaitForSeconds(reloadTime * 0.8f);
 
 
-        gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
+        int AmmoNeeded = gunList[gunListPos].ammoMax - gunList[gunListPos].ammoCur;
+        int AmmoToLoad = Mathf.Min(AmmoNeeded, gunList[gunListPos].ammoReserve);
+
+        gunList[gunListPos].ammoCur += AmmoToLoad;
+        gunList[gunListPos].ammoReserve -= AmmoToLoad;
         updateAmmoUI();
 
         t = 0;

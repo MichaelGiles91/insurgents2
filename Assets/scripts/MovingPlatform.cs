@@ -64,6 +64,10 @@ public class MovingPlatform : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            other.transform.SetParent(Platform);
+        }
         if (other.CompareTag("Player"))
         {
             canPress = true;
@@ -71,6 +75,10 @@ public class MovingPlatform : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            other.transform.SetParent(Platform);
+        }
         if (other.CompareTag("Player"))
         {
             canPress = false;
