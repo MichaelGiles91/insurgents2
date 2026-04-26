@@ -25,6 +25,4 @@ public class gunStats : ScriptableObject
 
     public AudioClip hitSound;
     [Range(0, 1)] public float hitSoundVol;
-    public int ammoReserve;
-    public int ammoReserveMax;
 }

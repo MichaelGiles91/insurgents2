@@ -15,6 +15,8 @@ public class BossAI : MonoBehaviour, IDamage
     [SerializeField] float jumpRate;
     [SerializeField] float jumpForce;
 
+    [SerializeField] Animator animate;
+
     Rigidbody rb;
     float jumpTimer;
    
@@ -37,7 +39,9 @@ public class BossAI : MonoBehaviour, IDamage
     {
         shootTimer += Time.deltaTime;
         jumpTimer += Time.deltaTime;
-
+       
+        float speed = agent.velocity.magnitude;
+        animate.SetFloat("Speed", speed);
         agent.SetDestination(gameManager.instance.player.transform.position);
         
         if (shootTimer >= shootRate)
@@ -56,7 +60,7 @@ public class BossAI : MonoBehaviour, IDamage
     void shoot()
     {
         shootTimer = 0;
-        Instantiate(fireBall, shootPos.position, transform.rotation);
+        Instantiate(fireBall, shootPos.position, shootPos.rotation);
     }
 
 /* void bossJump()

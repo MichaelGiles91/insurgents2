@@ -4441,7 +4441,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6361224542141772755}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 107b391bcf92a3c4695fdb0c5e221066, type: 3}
   m_Controller: {fileID: 9100000, guid: 8bc8b2d63f8001b488fbebcfbb95c56b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -4474,7 +4474,7 @@ MonoBehaviour:
   attackRate: 1
   attackRange: 3
   animate: {fileID: 7875619547665529253}
-  animateTransitionSpeed: 1
+  animateTransitionSpeed: 5
   isDummy: 0
 --- !u!1 &6412153960736763935
 GameObject:

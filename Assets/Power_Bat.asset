@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Power_Bat
   m_EditorClassIdentifier: Assembly-CSharp::gunStats
   isPowerWeapon: 1
-  powerDuration: 100
+  powerDuration: 20
   powerMusic: {fileID: 8300000, guid: 0d9e9009a553e324293990fc383c8e60, type: 3}
   gunModel: {fileID: 796996835362358867, guid: 62939a2551aa6f4408b73c3826ca16bb, type: 3}
   shootDamage: 25

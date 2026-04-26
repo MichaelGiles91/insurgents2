@@ -258,6 +258,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
         if (isReloading) return;
         if (gunList.Count == 0) return;
         if (gunListPos < 0 || gunListPos >= gunList.Count) return;
+
         if (gunList[gunListPos].isPowerWeapon) return;
         if (Input.GetButton("sprint")) return;
         if (gunList[gunListPos].ammoReserve <= 0) return;
@@ -474,7 +475,7 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
             ammoText.text = "";
             return;
         }
-        if(gunListPos < 0 || gunListPos >= gunList.Count)
+        if (gunListPos < 0 || gunListPos >= gunList.Count)
         {
             return;
         }
@@ -509,11 +510,11 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
 
         yield return new WaitForSeconds(reloadTime * 0.8f);
 
-
         int ammoNeeded = gunList[gunListPos].ammoMax - gunList[gunListPos].ammoCur;
         int ammoTaken = Mathf.Min(ammoNeeded, gunList[gunListPos].ammoReserve);
         gunList[gunListPos].ammoCur += ammoTaken;
         gunList[gunListPos].ammoReserve -= ammoTaken;
+
         updateAmmoUI();
 
         t = 0;

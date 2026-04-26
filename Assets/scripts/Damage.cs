@@ -23,6 +23,8 @@ public class Damage : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Boss"), LayerMask.NameToLayer("Projectile"), true);
+
         if(type == damageType.bullet)
         {
             rb.linearVelocity = transform.forward * speed;

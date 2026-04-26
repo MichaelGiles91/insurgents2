@@ -68,7 +68,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
     void locomotionAnim()
     {
-        float agentCurrentSpeed = agent.velocity.normalized.magnitude;
+        float agentCurrentSpeed = agent.velocity.magnitude;
         float agentSpeedAnim = animate.GetFloat("Speed");
 
         animate.SetFloat("Speed", Mathf.MoveTowards(agentSpeedAnim,agentCurrentSpeed, Time.deltaTime * animateTransitionSpeed));
