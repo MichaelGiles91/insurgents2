@@ -370,29 +370,30 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
     }
     public void getGunStats(gunStats gun)
     {
+        if (gun == null)
+        {
+            Debug.LogWarning("Tried to pick up a null gun.");
+            return;
+        }
 
-        gunStats RuntimeGun = Instantiate(gun);
+        gun.ammoCur = gun.ammoMax;
+        gun.ammoReserve = gun.ammoReserveMax;
 
-        RuntimeGun.ammoCur = RuntimeGun.ammoMax;
-        RuntimeGun.ammoReserve = RuntimeGun.ammoReserveMax;
-
-        gunList.Add(RuntimeGun);
+        gunList.Add(gun);
         gunListPos = gunList.Count - 1;
 
         shootDamage = gun.shootDamage;
         shootDist = gun.shootDist;
         shootRate = gun.shootRate;
 
-
-
         gunModel.SetActive(true);
 
         changeGun();
         updateAmmoUI();
 
-        if (RuntimeGun.isPowerWeapon)
+        if (gun.isPowerWeapon)
         {
-            StartCoroutine(powerWeaponRoutine(RuntimeGun));
+            StartCoroutine(powerWeaponRoutine(gun));
         }
     }
 
@@ -416,8 +417,8 @@ public class PlayerController : MonoBehaviour, IDamage, Iheal, IOpen, IPush
             return;
         }
 
-        if (gunNameCoroutine != null) StopCoroutine(gunNameCoroutine);
-        gunNameCoroutine = StartCoroutine(ShowGunName());
+        //if (gunNameCoroutine != null) StopCoroutine(gunNameCoroutine);
+        //gunNameCoroutine = StartCoroutine(ShowGunName());
 
         shootDamage = gunList[gunListPos].shootDamage;
         shootDist = gunList[gunListPos].shootDist;
