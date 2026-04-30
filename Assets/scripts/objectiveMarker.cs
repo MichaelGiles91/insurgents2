@@ -18,6 +18,11 @@ public class objectiveMarker : MonoBehaviour
 
         Vector3 screenPos = cam.WorldToScreenPoint(target.position + offset);
 
+        if(screenPos.z < 0)
+        {
+            screenPos *= -1;
+        }
+
         bool onScreen = screenPos.z > 0 &&
                         screenPos.x > 0 && screenPos.x < Screen.width &&
                         screenPos.y > 0 && screenPos.y < Screen.height;

@@ -3701,7 +3701,7 @@ PrefabInstance:
     - target: {fileID: 3755308005407077650, guid: a6c20a994124bc94999010eec3ca93a2, type: 3}
       propertyPath: gunType
       value: 
-      objectReference: {fileID: 11400000, guid: 26f851cf90957c74bbcbaa2d99972005, type: 2}
+      objectReference: {fileID: 11400000, guid: 5160fd40cac883248a836f8e450a03a7, type: 2}
     - target: {fileID: 3755308005407077650, guid: a6c20a994124bc94999010eec3ca93a2, type: 3}
       propertyPath: openCrate
       value: 
