@@ -5635,7 +5635,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -556980373527062883, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
       propertyPath: JumpMax
-      value: 30
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -556980373527062883, guid: f266d93a249119a4ba15d2bbff247970, type: 3}
       propertyPath: ammoText
